@@ -14,4 +14,6 @@
     <string name="permission_rationale">"Permissão para acesso a contatos necessária para habilitar email autocomplete"</string>
     <string name="bemvindo">Bem-vindo</string>
     <string name="registrar">Não tem conta? Crie uma</string>
+    <string name="title_activity_cadastro">Cadastro</string>
+    <string name="prompt_username">Username</string>
 </resources>

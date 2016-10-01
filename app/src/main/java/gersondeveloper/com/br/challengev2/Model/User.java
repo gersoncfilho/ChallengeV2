@@ -13,7 +13,7 @@ public class User {
    String email;
    String password;
    String phone;
-   String userStatus;
+   //String userStatus;
 
    public String getUsername() {
       return username;
@@ -63,11 +63,11 @@ public class User {
       this.phone = phone;
    }
 
-   public String getUserStatus() {
+   /*public String getUserStatus() {
       return userStatus;
    }
 
    public void setUserStatus(String userStatus) {
       this.userStatus = userStatus;
-   }
+   }*/
 }
