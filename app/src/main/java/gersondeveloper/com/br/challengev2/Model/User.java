@@ -1,19 +1,48 @@
 package gersondeveloper.com.br.challengev2.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by gerso on 01/10/2016.
  */
 
 public class User {
 
+   @SerializedName("Id")
    int id;
+
+   @SerializedName("Username")
    String username;
+
+   @SerializedName("FirstName")
    String firstName;
+
+   @SerializedName("LastName")
    String lastName;
+
+   @SerializedName("Email")
    String email;
+
+   @SerializedName("Password")
    String password;
+
+   @SerializedName("Phone")
    String phone;
-   String userStatus;
+   //String userStatus;
+
+   public User(){}
+
+   public User(int id, String username, String firstName, String lastName, String email, String password, String phone)
+   {
+      this.id=id;
+      this.username=username;
+      this.firstName=firstName;
+      this.lastName=lastName;
+      this.email=email;
+      this.password=password;
+      this.phone=phone;
+   }
+
 
    public String getUsername() {
       return username;
@@ -63,11 +92,11 @@ public class User {
       this.phone = phone;
    }
 
-   public String getUserStatus() {
+   /*public String getUserStatus() {
       return userStatus;
    }
 
    public void setUserStatus(String userStatus) {
       this.userStatus = userStatus;
-   }
+   }*/
 }
