@@ -1,4 +1,4 @@
-package gersondeveloper.com.br.challengev2;
+package gersondeveloper.com.br.challengev2.Activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -31,6 +31,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import gersondeveloper.com.br.challengev2.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
