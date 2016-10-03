@@ -2,12 +2,13 @@ package gersondeveloper.com.br.challengev2.Connection;
 
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import gersondeveloper.com.br.challengev2.Interface.MyAPIInterface;
 import gersondeveloper.com.br.challengev2.Model.User;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,6 +25,7 @@ public class RestClient {
     private static RestClient instance;
     private Retrofit retrofit;
     MyAPIInterface apiService;
+
 
 
 
@@ -47,10 +49,14 @@ public class RestClient {
     //Constructor
     private RestClient()
     {
-
+        final OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .build();
 
         this.retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

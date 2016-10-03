@@ -3,23 +3,20 @@ package gersondeveloper.com.br.challengev2.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
+import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -39,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.User;
@@ -212,9 +208,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             data.put("username", email);
             data.put("password", password);
 
-            //RestClient.getInstance().getUserLogin(data, loginCallback);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            RestClient.getInstance().getUserLogin(data, loginCallback);
+            /*Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);*/
 
         }
     }
@@ -323,13 +319,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         public void onResponse(Call<User> call, Response<User> response) {
             //login succeeded logic
-            Log.d(TAG, "Login bem sucedido para" + "");
             int statusCode = response.code();
             User user = response.body();
             //status code 200 = success operation
             //open mainactivity passing user
             if(statusCode == 200)
             {
+                Log.d(TAG,"Login realizado com sucesso");
                 showProgress(false);
                 ChallengeUtil.saveUser(getApplicationContext(), user);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -342,9 +338,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 showProgress(false);
                 Toast.makeText(LoginActivity.this, R.string.usuario_invalido, Toast.LENGTH_LONG).show();
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
+
             }
             else
             {
