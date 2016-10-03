@@ -212,8 +212,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             data.put("username", email);
             data.put("password", password);
 
-            RestClient.getInstance().getUserLogin(data, loginCallback);
-
+            //RestClient.getInstance().getUserLogin(data, loginCallback);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
 
         }
     }
