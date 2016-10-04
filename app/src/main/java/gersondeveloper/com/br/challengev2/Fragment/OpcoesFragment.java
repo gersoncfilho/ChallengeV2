@@ -52,6 +52,7 @@ public class OpcoesFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_teste_fragment);
         linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         data = new ArrayList<Product>();
