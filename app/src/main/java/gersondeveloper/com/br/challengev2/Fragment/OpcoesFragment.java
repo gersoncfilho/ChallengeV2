@@ -17,6 +17,7 @@ import gersondeveloper.com.br.challengev2.Adapter.OpcoesAdapter;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.MySeedData;
+import me.relex.circleindicator.CircleIndicator;
 
 /**
  * Created by gersoncardoso on 04/10/2016.
@@ -26,6 +27,7 @@ public class OpcoesFragment extends Fragment {
 
     private ArrayList<Product> data;
     private ViewPager viewPager;
+    private CircleIndicator circleIndicator;
 
     @Nullable
     @Override
@@ -33,6 +35,8 @@ public class OpcoesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_opcoes, container, false);
 
         viewPager = (ViewPager) view.findViewById(R.id.opcoes_view_pager);
+        circleIndicator = (CircleIndicator) view.findViewById(R.id.indicator);
+        circleIndicator.setViewPager(viewPager);
 
         data = new ArrayList<Product>();
         for(int i=0;i< MySeedData.nameArray.length; i++)
