@@ -6,19 +6,15 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_container">
 
-    <fragment
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2" tools:layout="@layout/fragment_opcoes"/>
-
-    <fragment
+    <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2" tools:layout="@layout/fragment_botoes" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        android:id="@+id/toolbar"
+        android:titleTextColor="@color/white">
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2" tools:layout="@layout/fragment_cards" />
+    </android.support.v7.widget.Toolbar>
 
 </LinearLayout>

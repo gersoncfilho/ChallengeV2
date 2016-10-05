@@ -18,4 +18,7 @@
     <string name="prompt_username">Username</string>
     <string name="usuario_invalido">Usuário inválido.</string>
     <string name="falha_internet">Faha de acesso a internet. Tente novamente em alguns instantes.</string>
+    <string name="sair_aplicacao">Tem certeza que deseja sair da aplicação?</string>
+    <string name="cancel">Cancelar</string>
+    <string name="sair">Sair</string>
 </resources>
