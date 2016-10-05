@@ -24,7 +24,7 @@ public class FragmentPrincipal extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, ("onCreateView"));
         View view = inflater.inflate(R.layout.fragment_principal, container, false);
-        a = view.findViewById(R.id.fragment_teste);
+        a = view.findViewById(R.id.fragment_opcoes);
         b = view.findViewById(R.id.fragment_botoes);
         c = view.findViewById(R.id.fragment_cards);
         return view;
