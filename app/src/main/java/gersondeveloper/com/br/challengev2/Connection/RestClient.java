@@ -69,4 +69,10 @@ public class RestClient {
         call.enqueue(callback);
     }
 
+    public void registerUser(User user, Callback<User> callback)
+    {
+        Call<User>call = apiService.postUser(user);
+        call.enqueue(callback);
+    }
+
 }

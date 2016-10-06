@@ -21,6 +21,9 @@
     <string name="sair_aplicacao">Tem certeza que deseja sair da aplicação?</string>
     <string name="cancel">Cancelar</string>
     <string name="sair">Sair</string>
+    <string name="confirmacao_email">Email não confirmado</string>
+    <string name="aguarde">Aguarde...</string>
+    <string name="comprar">COMPRAR</string>
 
 
 </resources>
