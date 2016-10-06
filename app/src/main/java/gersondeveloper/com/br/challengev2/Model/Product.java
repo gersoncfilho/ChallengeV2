@@ -1,6 +1,6 @@
 package gersondeveloper.com.br.challengev2.Model;
 
-import java.util.Currency;
+import java.math.BigDecimal;
 
 /**
  * Created by gerso on 01/10/2016.
@@ -10,8 +10,18 @@ public class Product {
     String id;
     String type;
     String name;
-    Currency productValue;
+    BigDecimal productValue;
     String description;
+    int productImage;
+
+    public Product(String type, String name, BigDecimal productValue, String description, int productImage)
+    {
+        this.type = type;
+        this.name = name;
+        this.productValue = productValue;
+        this.description = description;
+        this.productImage = productImage;
+    }
 
     public String getType() {
         return type;
@@ -29,11 +39,11 @@ public class Product {
         this.name = name;
     }
 
-    public Currency getProductValue() {
+    public BigDecimal getProductValue() {
         return productValue;
     }
 
-    public void setProductValue(Currency productValue) {
+    public void setProductValue(BigDecimal productValue) {
         this.productValue = productValue;
     }
 
@@ -43,5 +53,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(int productImage) {
+        this.productImage = productImage;
     }
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/fragment_cards"
+    android:layout_height="140dp">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="horizontal"
+       android:background="@drawable/layout_border" android:layout_marginBottom="20dp">
+
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+           android:gravity="center_horizontal">
+
+           <ImageButton
+               android:layout_width="80dp"
+               android:layout_height="80dp"
+               android:background="@drawable/rounded_rectangle"
+               android:layout_gravity="center"
+               android:src="@drawable/joystick_xbox_vector"
+               android:scaleType="centerInside" android:padding="10dp" />
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent" android:layout_weight="1"
+           android:gravity="center_horizontal">
+
+           <Button
+               android:layout_width="80dp"
+               android:layout_height="80dp"
+               android:background="@drawable/rounded_rectangle"
+               android:layout_gravity="center" />
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent" android:layout_weight="1"
+           android:gravity="center_horizontal">
+
+           <Button
+               android:layout_width="80dp"
+               android:layout_height="80dp"
+               android:background="@drawable/rounded_rectangle"
+               android:layout_gravity="center" />
+
+       </LinearLayout>
+
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent" android:layout_weight="1"
+           android:gravity="center_horizontal">
+
+           <Button
+               android:layout_width="80dp"
+               android:layout_height="80dp"
+               android:background="@drawable/rounded_rectangle"
+               android:layout_gravity="center" />
+
+       </LinearLayout>
+   </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:layout_marginBottom="10dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_cards">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+</LinearLayout>
