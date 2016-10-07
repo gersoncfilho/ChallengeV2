@@ -19,7 +19,10 @@ public class MySeedData {
     public static String[] productDescriptionArray = {"Descrição PS4","Descrição Xbox One","Joystick Descriptiojn"};
 
     public static Integer[] drawableArray = {
-            R.drawable.playstation_4_20th_anniversary, R.drawable.xbox_one, R.drawable.joystick
+            R.drawable.opcoes_1_new, R.drawable.xbox_one, R.drawable.joystick
     };
 
+    public static Integer[] drawableArrayCards = {
+            R.drawable.playstation_4_20th_anniversary, R.drawable.xbox_one, R.drawable.joystick
+    };
 }
