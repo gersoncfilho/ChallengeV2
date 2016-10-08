@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getIntent().getBooleanExtra("LOGOUT",false))
+        if(getIntent().getBooleanExtra("logout",false))
         {
             finish();
         }
