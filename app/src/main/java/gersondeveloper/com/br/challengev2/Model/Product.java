@@ -11,11 +11,16 @@ public class Product implements Serializable {
     String id;
     String type;
     String name;
-    BigDecimal productValue;
+    double productValue;
     String description;
     int productImage;
 
-    public Product(String type, String name, BigDecimal productValue, String description, int productImage)
+    public Product()
+    {
+
+    }
+
+    public Product(String type, String name, double productValue, String description, int productImage)
     {
         this.type = type;
         this.name = name;
@@ -40,11 +45,11 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public BigDecimal getProductValue() {
+    public double getProductValue() {
         return productValue;
     }
 
-    public void setProductValue(BigDecimal productValue) {
+    public void setProductValue(double productValue) {
         this.productValue = productValue;
     }
 

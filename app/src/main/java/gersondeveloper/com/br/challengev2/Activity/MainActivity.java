@@ -39,11 +39,6 @@ public class MainActivity extends FragmentActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        Intent intent = getIntent();
-        String userString = intent.getStringExtra("user");
-        bundle = new Bundle();
-        bundle.putString("user", userString);
-
         if(savedInstanceState != null)
         {
             if(savedInstanceState.containsKey("content"))
@@ -85,21 +80,17 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if(fragmentManager.getBackStackEntryCount() > 0)
-        {
-            super.onBackPressed();
-        }
-        else if(contentFragment instanceof FragmentPrincipal || fragmentManager.getBackStackEntryCount() == 0)
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        Log.d("Backstack count: ", "" + count);
+
+        if(count == 0)
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setPositiveButton(R.string.sair, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("logout", true);
-                    startActivity(intent);
+                    finishAffinity();
 
                 }
             });
@@ -115,13 +106,18 @@ public class MainActivity extends FragmentActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         }
+        else
+        {
+            getSupportFragmentManager().popBackStack();
+        }
+
+
     }
 
     public void switchContent(Fragment fragment, String tag)
     {
         FragmentManager fragmentManager = getSupportFragmentManager();
         while(fragmentManager.popBackStackImmediate());
-
         if(fragment != null)
         {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -132,6 +128,7 @@ public class MainActivity extends FragmentActivity {
             {
                 transaction.addToBackStack(tag);
             }
+
             transaction.commit();
             contentFragment = fragment;
         }

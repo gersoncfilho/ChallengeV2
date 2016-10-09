@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.R;
@@ -64,6 +65,7 @@ public class OpcoesAdapter extends PagerAdapter {
 
                 FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.content_frame, fragment, FragmentProductDetail.FRAG_ID);
+                transaction.addToBackStack(FragmentPrincipal.FRAG_ID);
                 transaction.commit();
             }
         });
