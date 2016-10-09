@@ -24,6 +24,11 @@
     <string name="confirmacao_email">Email não confirmado</string>
     <string name="aguarde">Aguarde...</string>
     <string name="comprar">COMPRAR</string>
+    <string name="confirmacao_compra_titulo">Confirmação da Compra</string>
+    <string name="confirmacao_label_id_ransaction">Num. da Compra:</string>
+    <string name="confirmacao_label_product_name">Nome do Produto:</string>
+    <string name="confirmacao_label_product_value">Valor do Produto:</string>
+    <string name="confirma">Confirma</string>
 
 
 </resources>
