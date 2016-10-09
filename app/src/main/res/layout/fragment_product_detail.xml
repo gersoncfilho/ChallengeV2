@@ -3,9 +3,52 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="PQP"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/detailImageProduct"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2" android:textSize="100sp" android:textColor="@color/colorAccent" />
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailTextViewPrice"
+            android:textSize="26sp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:fontFamily="monospace"
+            android:textStyle="normal|bold" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailTextViewName"
+            android:textSize="22sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailTextViewDescription"
+            android:textSize="18sp" />
+
+        <Button
+            android:text="Comprar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonComprar"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/colorPrimary" android:textColor="@color/white" android:elevation="5dp" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

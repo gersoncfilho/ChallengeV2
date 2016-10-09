@@ -34,10 +34,10 @@
                 android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewPrice"
+                android:id="@+id/detailTextViewPrice"
                 android:layout_below="@+id/imageViewProduct"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/destaque"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_marginLeft="5dp"/>
@@ -45,8 +45,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewName"
-                android:layout_below="@+id/textViewPrice"
+                android:id="@+id/detailTextViewName"
+                android:layout_below="@+id/detailTextViewPrice"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:textSize="16sp" />
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewDescription"
-                android:layout_below="@+id/textViewName"
+                android:layout_below="@+id/detailTextViewName"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginBottom="5dp"

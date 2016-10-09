@@ -96,13 +96,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         if(ChallengeUtil.isUserResgistered(LoginActivity.this))
         {
-            user = ChallengeUtil.getUser(LoginActivity.this);
-            Bundle args = new Bundle();
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(user);
-            args.putString("user",jsonString);
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("user", jsonString);
             startActivity(intent);
 
         }

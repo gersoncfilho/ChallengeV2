@@ -2,11 +2,17 @@ package gersondeveloper.com.br.challengev2.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gersondeveloper.com.br.challengev2.Model.Payment;
+import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.Model.Sender;
 import gersondeveloper.com.br.challengev2.Model.User;
 
@@ -44,6 +51,12 @@ public class ChallengeUtil {
     public static final String DATE = "date";
     public static final String SENDER = "sender";
 
+    //Product
+    public static final String PRODUCT_TYPE = "type";
+    public static final String PRODUCT_NAME = "name";
+    public static final String PRODUCT_VALUE = "product_value";
+    public static final String PRODUCT_DESCRIPTION = "description";
+    public static final String PRODUCT_IMAGE = "product_image";
 
     /**
      *
@@ -85,7 +98,6 @@ public class ChallengeUtil {
         sharedPreferences.edit().putString(SENDER,sender.toString()).apply();
     }
 
-
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
 
     public static boolean emailValidator (String email)
@@ -115,7 +127,5 @@ public class ChallengeUtil {
             return false;
         }
     }
-
-
 
 }

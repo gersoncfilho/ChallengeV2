@@ -87,5 +87,10 @@ public class FragmentPrincipal extends Fragment {
 
     }
 
+    public interface RecyclerOnItemClicked
+    {
+        public void onItemClick(View childView, int position);
+    }
+
 
 }
