@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
+
+import com.google.gson.Gson;
 
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
+import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
 
 public class MainActivity extends FragmentActivity {
@@ -22,16 +26,23 @@ public class MainActivity extends FragmentActivity {
     FragmentPrincipal fragmentPrincipal;
     FragmentProductDetail fragmentProductDetail;
     Toolbar toolbar;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+
+        Intent intent = getIntent();
+        String userString = intent.getStringExtra("user");
+        bundle = new Bundle();
+        bundle.putString("user", userString);
 
         if(savedInstanceState != null)
         {
@@ -54,6 +65,7 @@ public class MainActivity extends FragmentActivity {
         else
         {
             contentFragment = new FragmentPrincipal();
+            contentFragment.setArguments(bundle);
             switchContent(contentFragment, FragmentPrincipal.FRAG_ID);
         }
     }

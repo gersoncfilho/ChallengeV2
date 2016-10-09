@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,34 +44,6 @@ public class ChallengeUtil {
     public static final String DATE = "date";
     public static final String SENDER = "sender";
 
-
-
-    /**
-     *
-     * @param context
-     * @return boolean if user have a valid login
-     */
-    public static boolean isLoginStored(Context context)
-    {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(ChallengeUtil.PREFERENCE_NAME, context.MODE_PRIVATE);
-        Map<String,?> map = sharedPreferences.getAll();
-        if(map.size()>0)
-        {
-            String username = (String) map.get(ChallengeUtil.USERNAME);
-            if(username == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
 
     /**
      *
@@ -112,12 +85,35 @@ public class ChallengeUtil {
         sharedPreferences.edit().putString(SENDER,sender.toString()).apply();
     }
 
+
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
 
     public static boolean emailValidator (String email)
     {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
+    }
+
+    public static boolean isUserResgistered(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME,0);
+        Map<String, ?> map = sharedPreferences.getAll();
+        if(map.size()>0)
+        {
+            String username = (String) map.get(USERNAME);
+            if(username != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
