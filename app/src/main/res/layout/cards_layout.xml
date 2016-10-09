@@ -37,7 +37,7 @@
                 android:id="@+id/detailTextViewPrice"
                 android:layout_below="@+id/imageViewProduct"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/destaque"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_marginLeft="5dp"/>

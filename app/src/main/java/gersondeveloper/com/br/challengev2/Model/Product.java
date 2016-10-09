@@ -1,5 +1,8 @@
 package gersondeveloper.com.br.challengev2.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -7,42 +10,37 @@ import java.math.BigDecimal;
  * Created by gerso on 01/10/2016.
  */
 
-public class Product implements Serializable {
-    String id;
-    String type;
-    String name;
+public class Product implements Parcelable {
+    String productId;
+    String productType;
+    String productName;
     double productValue;
-    String description;
+    String productDescription;
     int productImage;
 
-    public Product()
+    public Product(String productType, String productName, double productValue, String productDescription, int productImage)
     {
-
-    }
-
-    public Product(String type, String name, double productValue, String description, int productImage)
-    {
-        this.type = type;
-        this.name = name;
+        this.productType = productType;
+        this.productName = productName;
         this.productValue = productValue;
-        this.description = description;
+        this.productDescription = productDescription;
         this.productImage = productImage;
     }
 
     public String getType() {
-        return type;
+        return productType;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.productType = productType;
     }
 
     public String getName() {
-        return name;
+        return productName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.productName = name;
     }
 
     public double getProductValue() {
@@ -54,11 +52,11 @@ public class Product implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return productDescription;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.productDescription = description;
     }
 
     public int getProductImage() {
@@ -67,5 +65,46 @@ public class Product implements Serializable {
 
     public void setProductImage(int productImage) {
         this.productImage = productImage;
+    }
+
+
+    //Parcelling
+
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(productType);
+        parcel.writeString(productName);
+        parcel.writeDouble(productValue);
+        parcel.writeString(productDescription);
+        parcel.writeInt(productImage);
+    }
+
+    //constructor for createFromParcel
+    public Product(Parcel in)
+    {
+        this.productType = in.readString();
+        this.productName = in.readString();
+        this.productValue = in.readDouble();
+        this.productDescription = in.readString();
+        this.productImage = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+
+        @Override
+        public Product createFromParcel(Parcel source) {
+            return new Product(source);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

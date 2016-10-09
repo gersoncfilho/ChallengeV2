@@ -90,24 +90,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
                     Bundle args = new Bundle();
                     Fragment fragment = null;
 
-                    /*Product product = (Product) dataSet.get(listPosition);
-                    args.putParcelable(product);*/
+                    Product product = (Product) dataSet.get(listPosition);
+                    args.putParcelable("product", product);
 
+                    //Starts details fragment
                     fragment = new FragmentProductDetail();
-                    Product product = new Product();
-                    product.setName(dataSet.get(listPosition).getName().toString());
-                    product.setProductValue(dataSet.get(listPosition).getProductValue());
-                    product.setDescription(dataSet.get(listPosition).getDescription());
-                    product.setProductImage(dataSet.get(listPosition).getProductImage());
-                    Bundle bundle = new Bundle();
-                    Gson gson = new Gson();
-                    String productString = gson.toJson(product);
-                    bundle.putString("product", productString);
-                    fragment.setArguments(bundle);
-
-
-
-
+                    fragment.setArguments(args);
+                    
                     FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.content_frame, fragment, FragmentProductDetail.FRAG_ID);
                     transaction.addToBackStack(FragmentProductDetail.FRAG_ID);

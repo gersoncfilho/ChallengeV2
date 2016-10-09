@@ -98,30 +98,6 @@ public class ChallengeUtil {
         sharedPreferences.edit().putString(SENDER,sender.toString()).apply();
     }
 
-    public static void saveProduct(Context context, Product product)
-    {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME,0);
-        sharedPreferences.edit().putString(PRODUCT_NAME, product.getName()).apply();
-        sharedPreferences.edit().putString(PRODUCT_DESCRIPTION, product.getDescription()).apply();
-        sharedPreferences.edit().putInt(PRODUCT_IMAGE, product.getProductImage()).apply();
-        sharedPreferences.edit().putString(PRODUCT_TYPE, product.getType()).apply();
-        sharedPreferences.edit().putLong(PRODUCT_VALUE, Double.doubleToRawLongBits(product.getProductValue())).apply();
-    }
-
-    public static Product getProduct(Context context)
-    {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME,0);
-        Product product = new Product();
-        product.setName(sharedPreferences.getString(PRODUCT_NAME,""));
-        product.setDescription(sharedPreferences.getString(PRODUCT_DESCRIPTION,""));
-        product.setProductImage(sharedPreferences.getInt(PRODUCT_IMAGE,0));
-        String productValue = sharedPreferences.getString(PRODUCT_VALUE,"");
-        product.setProductValue(Double.parseDouble(productValue));
-        product.setType(sharedPreferences.getString(PRODUCT_TYPE,""));
-        return product;
-    }
-
-
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
 
     public static boolean emailValidator (String email)
@@ -151,19 +127,5 @@ public class ChallengeUtil {
             return false;
         }
     }
-
-    /*public static Product convertFromJson(JSONObject stringJson)
-    {
-        if(stringJson == null)
-        {
-            return null;
-        }
-        Product product = new Product();
-
-
-
-    }*/
-
-
 
 }
