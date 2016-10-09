@@ -32,6 +32,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,59 +82,76 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private TextView mRegistrar;
+    private User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getIntent().getBooleanExtra("LOGOUT",false))
+        if(getIntent().getBooleanExtra("logout",false))
         {
             finish();
         }
 
-        setContentView(R.layout.activity_login);
-        // Set up the login form.
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.editTextUsername);
-        populateAutoComplete();
+        if(ChallengeUtil.isUserResgistered(LoginActivity.this))
+        {
+            user = ChallengeUtil.getUser(LoginActivity.this);
+            Bundle args = new Bundle();
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(user);
+            args.putString("user",jsonString);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("user", jsonString);
+            startActivity(intent);
 
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
+        }
+        else
+        {
+            setContentView(R.layout.activity_login);
+            // Set up the login form.
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            mEmailView = (AutoCompleteTextView) findViewById(R.id.editTextUsername);
+            populateAutoComplete();
+
+            mPasswordView = (EditText) findViewById(R.id.password);
+            mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                        attemptLogin();
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
 
-        mRegistrar = (TextView) findViewById(R.id.registrar);
-        mRegistrar.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
-                startActivity(intent);
-            }
-        });
+            mRegistrar = (TextView) findViewById(R.id.registrar);
+            mRegistrar.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+                    startActivity(intent);
+                }
+            });
 
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getWindow().getAttributes().token,0);
-                attemptLogin();
-            }
-        });
+            Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+            mEmailSignInButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getWindow().getAttributes().token, 0);
+                    attemptLogin();
+                }
+            });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+            mLoginFormView = findViewById(R.id.login_form);
+            mProgressView = findViewById(R.id.login_progress);
 
-        //Initializes RestClient Singleton Instance
-        RestClient.initialize();
+            //Initializes RestClient Singleton Instance
+            RestClient.initialize();
+        }
     }
 
     private void populateAutoComplete() {
@@ -225,9 +244,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             data.put("username", email);
             data.put("password", password);
 
-            //RestClient.getInstance().getUserLogin(data, loginCallback);
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            RestClient.getInstance().getUserLogin(data, loginCallback);
+            //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            //startActivity(intent);
 
         }
     }
@@ -361,6 +380,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             {
                 showProgress(false);
                 Toast.makeText(LoginActivity.this, R.string.falha_internet, Toast.LENGTH_LONG).show();
+                return;
             }
 
         }

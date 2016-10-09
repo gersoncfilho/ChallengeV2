@@ -1,12 +1,13 @@
 package gersondeveloper.com.br.challengev2.Model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by gerso on 01/10/2016.
  */
 
-public class Product {
+public class Product implements Serializable {
     String id;
     String type;
     String name;

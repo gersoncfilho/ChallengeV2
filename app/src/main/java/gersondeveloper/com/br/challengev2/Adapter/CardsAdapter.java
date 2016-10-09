@@ -1,5 +1,7 @@
 package gersondeveloper.com.br.challengev2.Adapter;
 
+import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,9 @@ import gersondeveloper.com.br.challengev2.R;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder> {
 
-        private ArrayList<Product> dataSet;
+    private ArrayList<Product> dataSet;
+    FragmentActivity activity;
+    LayoutInflater inflater;
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -38,15 +42,16 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
             }
         }
 
-        public CardsAdapter(ArrayList<Product> data) {
+        public CardsAdapter(FragmentActivity activity, ArrayList<Product> data) {
             this.dataSet = data;
+            this.activity = activity;
         }
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent,
         int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cards_layout, parent, false);
+            this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View view = inflater.inflate(R.layout.cards_layout, parent, false);
 
             //view.setOnClickListener(MainActivity.myOnClickListener);
 

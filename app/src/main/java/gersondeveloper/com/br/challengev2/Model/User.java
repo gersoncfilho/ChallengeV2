@@ -2,11 +2,13 @@ package gersondeveloper.com.br.challengev2.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by gerso on 01/10/2016.
  */
 
-public class User {
+public class User implements Serializable {
 
    @SerializedName("Id")
    int id;

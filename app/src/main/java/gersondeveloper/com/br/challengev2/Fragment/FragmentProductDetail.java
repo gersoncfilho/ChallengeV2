@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 import gersondeveloper.com.br.challengev2.R;
 
 /**
- * Created by gerso on 02/10/2016.
+ * Created by gerso on 08/10/2016.
  */
 
-public class BotoesFragment extends Fragment {
+public class FragmentProductDetail extends Fragment {
+
+    public static final String FRAG_ID = "fragment_poduct_detail";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_botoes, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_product_detail, container, false);
     }
 }
