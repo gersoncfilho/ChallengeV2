@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 import com.j256.ormlite.field.DatabaseField;
 
-import java.io.Serializable;
-
 /**
  * Created by gerso on 09/10/2016.
  */
@@ -27,6 +25,20 @@ public class Transaction implements Parcelable {
 
     @DatabaseField(columnName = "product_value")
     public Double productValue;
+
+    @DatabaseField(columnName = "product_image")
+    public int productImage;
+
+
+    public int getProdutImage() {
+        return productImage;
+    }
+
+    public void setProdutImage(int produtImage) {
+        this.productImage = produtImage;
+    }
+
+
 
 
     public String getUsername() {
@@ -62,12 +74,13 @@ public class Transaction implements Parcelable {
     }
 
     //Constructor
-    public Transaction(String username, String productName, int idPayment, double productValue)
+    public Transaction(String username, String productName, int idPayment, double productValue, int productImage)
     {
         this.username = username;
         this.productName = productName;
         this.idPayment = idPayment;
         this.productValue = productValue;
+        this.productImage = productImage;
     }
 
     @Override
@@ -76,6 +89,7 @@ public class Transaction implements Parcelable {
         parcel.writeString(productName);
         parcel.writeInt(idPayment);
         parcel.writeDouble(productValue);
+        parcel.writeInt(productImage);
     }
 
     //constructor for createFromParcel
@@ -85,6 +99,7 @@ public class Transaction implements Parcelable {
         this.productName = in.readString();
         this.idPayment = in.readInt();
         this.productValue = in.readDouble();
+        this.productImage = in.readInt();
     }
 
     public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
