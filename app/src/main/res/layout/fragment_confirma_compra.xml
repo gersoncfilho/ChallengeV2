@@ -72,7 +72,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/textView9"
-                        gra
                         android:textSize="10sp" />
                 </TableRow>
 
@@ -122,13 +121,32 @@
 
     </RelativeLayout>
 
-    <Button
-        android:text="@string/confirma"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:layout_marginTop="10dp" />
+        android:layout_height="wrap_content">
+
+        <TableRow>
+
+            <Button
+                android:text="@string/confirma"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirmaButtonConfirma"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp" android:layout_weight="1" />
+
+            <Button
+                android:text="@string/cancela"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirmaButtonCancela"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp" android:layout_weight="1" />
+        </TableRow>
+
+    </TableLayout>
+
 
 </LinearLayout>

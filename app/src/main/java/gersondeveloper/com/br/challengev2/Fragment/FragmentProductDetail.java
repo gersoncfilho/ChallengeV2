@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import gersondeveloper.com.br.challengev2.Model.Product;
+import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 
@@ -19,7 +20,7 @@ import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
  * Created by gerso on 08/10/2016.
  */
 
-public class FragmentProductDetail extends Fragment {
+public class FragmentProductDetail extends Fragment implements View.OnClickListener {
 
     public static final String FRAG_ID = "fragment_poduct_detail";
     Product product;
@@ -27,6 +28,7 @@ public class FragmentProductDetail extends Fragment {
     TextView textViewProductName, textViewProductValue, textViewProductDescription;
     ImageView productImageView;
     Button buttonComprar;
+    Transaction transaction;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +45,9 @@ public class FragmentProductDetail extends Fragment {
         textViewProductValue = (TextView) view.findViewById(R.id.detailTextViewPrice);
         textViewProductDescription = (TextView) view.findViewById(R.id.detailTextViewDescription);
         productImageView = (ImageView) view.findViewById(R.id.detailImageProduct);
+        buttonComprar = (Button) view.findViewById(R.id.detailButtonComprar);
 
+        buttonComprar.setOnClickListener(this);
 
         Bundle bundle = this.getArguments();
         if (bundle != null)
@@ -56,5 +60,13 @@ public class FragmentProductDetail extends Fragment {
         }
 
         return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == buttonComprar)
+        {
+
+        }
     }
 }

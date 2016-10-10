@@ -29,6 +29,7 @@
     <string name="confirmacao_label_product_name">Nome do Produto:</string>
     <string name="confirmacao_label_product_value">Valor do Produto:</string>
     <string name="confirma">Confirma</string>
+    <string name="cancela">Cancela</string>
 
 
 </resources>
