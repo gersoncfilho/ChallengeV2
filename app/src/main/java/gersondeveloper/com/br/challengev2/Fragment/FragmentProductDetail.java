@@ -75,7 +75,7 @@ public class FragmentProductDetail extends Fragment implements View.OnClickListe
         if(view == buttonComprar)
         {
             Log.d(TAG,getActivity().toString());
-            int idPayment = random.nextInt((100000 - 100) + 1) + 100;
+            int idPayment = random.nextInt((10000000 - 100) + 1) + 100;
             Bundle args = new Bundle();
             Fragment fragment = null;
 
