@@ -1,13 +1,12 @@
 package gersondeveloper.com.br.challengev2.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import gersondeveloper.com.br.challengev2.Fragment.FragmentOpcoes;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
 import gersondeveloper.com.br.challengev2.Model.Product;
@@ -59,12 +58,18 @@ public class OpcoesAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                String tipo = products.get(position).getType();
                 Fragment fragment = null;
+
+                bundle.putString("tipo_produto", tipo);
+
                 Log.d("Position adapter-->", "" + position);
                 fragment = new FragmentProductDetail();
+                fragment.setArguments(bundle);
 
                 FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.content_frame, fragment, FragmentProductDetail.FRAG_ID);
+                transaction.replace(R.id.content_frame, fragment, FragmentOpcoes.FRAG_ID);
                 transaction.addToBackStack(FragmentPrincipal.FRAG_ID);
                 transaction.commit();
             }
