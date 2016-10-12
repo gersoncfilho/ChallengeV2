@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -190,7 +191,15 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             builder.setPositiveButton(R.string.fechar, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    
+                    Fragment fragment = new FragmentPrincipal();
+
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.content_frame, fragment);
+
+                    clearBackStack();
+
+                    fragmentTransaction.commit();
                 }
             });
 
@@ -204,6 +213,16 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             Log.e(TAG, t.toString());
         }
     };
+
+    //Clear the fragment history after concludes the transaction
+    public void clearBackStack()
+    {
+        FragmentManager fm = getFragmentManager();
+        for(int i = 0;i<fm.getBackStackEntryCount();i++)
+        {
+            fm.popBackStack();
+        }
+    }
 
     /**
      * Called when the fragment is no longer in use.  This is called
