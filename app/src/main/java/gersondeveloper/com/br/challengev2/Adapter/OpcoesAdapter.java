@@ -65,7 +65,7 @@ public class OpcoesAdapter extends PagerAdapter {
                 bundle.putString("tipo_produto", tipo);
 
                 Log.d("Position adapter-->", "" + position);
-                fragment = new FragmentProductDetail();
+                fragment = new FragmentOpcoes();
                 fragment.setArguments(bundle);
 
                 FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import gersondeveloper.com.br.challengev2.Adapter.CardsAdapter;
+import gersondeveloper.com.br.challengev2.Adapter.FragmentOpcoesAdapter;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.MySeedData;
@@ -81,7 +82,7 @@ public class FragmentOpcoes extends Fragment implements View.OnClickListener {
 
         createDataCards(tipoProduto);
 
-        recyclerView.setAdapter(new CardsAdapter(activity, data_cards));
+        recyclerView.setAdapter(new FragmentOpcoesAdapter(activity, data_cards));
 
         return view;
     }
