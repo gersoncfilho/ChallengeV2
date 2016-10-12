@@ -1,9 +1,13 @@
 package gersondeveloper.com.br.challengev2.Fragment;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +16,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 
+import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Data.DatabaseHelper;
+import gersondeveloper.com.br.challengev2.Model.Payment;
+import gersondeveloper.com.br.challengev2.Model.Sender;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
+import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
+import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by gerso on 09/10/2016.
@@ -23,6 +42,7 @@ import gersondeveloper.com.br.challengev2.R;
 
 public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickListener {
 
+    public static final String TAG = FragmentConfirmacaoCompra.class.getName();
     public static final String FRAG_ID = "fragment_confirmacao_compra";
     private DatabaseHelper databaseHelper;
     private TextView textViewProductName, textViewIdPayment, textViewProductValue;
@@ -30,6 +50,10 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     private ImageView imageViewProduct;
     Activity activity;
     Transaction transaction;
+    private static final String transactionSender = "Challenge Games";
+    Calendar calendar;
+    private String date;
+    SimpleDateFormat sf;
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -52,6 +76,9 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+        RestClient.initialize();
+        calendar = Calendar.getInstance();
+        sf = new SimpleDateFormat("dd-mm-yyyy");
 
     }
 
@@ -92,7 +119,11 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
         if(bundle != null)
         {
+            User user = new User();
+            user = ChallengeUtil.getUser(activity);
             transaction = bundle.getParcelable("produto_a_confirmar");
+            transaction.setUsername(user.getUsername());
+            transaction.setEmail(user.getEmail());
             textViewProductName.setText(transaction.getProductName());
             textViewIdPayment.setText(String.valueOf(transaction.getIdPayment()));
             textViewProductValue.setText(String.valueOf(transaction.getProductValue()));
@@ -107,7 +138,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     {
         if(databaseHelper == null)
         {
-            databaseHelper = OpenHelperManager.getHelper(getActivity(),DatabaseHelper.class);
+            databaseHelper = OpenHelperManager.getHelper(activity, DatabaseHelper.class);
         }
         return databaseHelper;
     }
@@ -115,7 +146,64 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     @Override
     public void onClick(View view) {
 
+        if(view == buttonCancel)
+        {
+            getFragmentManager().popBackStack();
+        }
+
+        if(view == buttonSubmit)
+        {
+            //grava dados o banco para futuro cancelamento de compra se necessario
+            try {
+                final Dao<Transaction, Integer> transactionDao = getDatabaseHelper().getTransactionDAO();
+                transactionDao.create(transaction);
+                Log.d(TAG, "Registro salvo com sucesso!");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+            //envia transacao para o webservice
+
+            date = sf.format(calendar.getTime());
+            Sender sender = new Sender();
+            sender.setName(transaction.getUsername());
+            sender.setEmail(transaction.getEmail());
+            Payment payment = new Payment();
+            payment.setSender(sender);
+            payment.setName(transactionSender);
+            payment.setDate(date);
+            payment.setDescription(transaction.getProductName());
+            payment.setReference(String.valueOf(transaction.getIdPayment()));
+
+            RestClient.getInstance().registerPayment(payment, registerPayment);
+
+        }
+
     }
+
+    private Callback<Payment> registerPayment = new Callback<Payment>() {
+        @Override
+        public void onResponse(Call<Payment> call, Response<Payment> response) {
+            Log.d(TAG, "Successful response.");
+            Log.d(TAG, "Response code: " + String.valueOf(response.code()));
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setPositiveButton(R.string.fechar, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    
+                }
+            });
+
+            builder.setMessage(R.string.compra_sucesso);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+
+        @Override
+        public void onFailure(Call<Payment> call, Throwable t) {
+            Log.e(TAG, t.toString());
+        }
+    };
 
     /**
      * Called when the fragment is no longer in use.  This is called

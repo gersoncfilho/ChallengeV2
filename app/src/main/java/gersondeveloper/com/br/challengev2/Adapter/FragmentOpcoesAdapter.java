@@ -1,7 +1,10 @@
 package gersondeveloper.com.br.challengev2.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +16,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import gersondeveloper.com.br.challengev2.Fragment.FragmentOpcoes;
+import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.R;
 
@@ -66,7 +71,7 @@ public class FragmentOpcoesAdapter extends RecyclerView.Adapter<FragmentOpcoesAd
         }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         TextView textViewName = holder.textViewName;
         TextView textViewPrice = holder.textViewPrice;
         TextView textViewDescription = holder.textViewDescription;
@@ -77,6 +82,26 @@ public class FragmentOpcoesAdapter extends RecyclerView.Adapter<FragmentOpcoesAd
         textViewPrice.setText(String.valueOf(dataSet.get(position).getProductValue()));
         textViewDescription.setText(dataSet.get(position).getDescription());
         imageViewProduct.setImageResource(dataSet.get(position).getProductImage());
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle args = new Bundle();
+                Fragment fragment = null;
+
+                Product product = (Product) dataSet.get(position);
+                args.putParcelable("product", product);
+
+                //Starts details fragment
+                fragment = new FragmentProductDetail();
+                fragment.setArguments(args);
+
+                FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_frame, fragment, FragmentProductDetail.FRAG_ID);
+                transaction.addToBackStack(FragmentOpcoes.FRAG_ID);
+                transaction.commit();
+            }
+        });
     }
 
 

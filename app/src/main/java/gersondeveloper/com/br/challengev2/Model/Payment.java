@@ -1,17 +1,32 @@
 package gersondeveloper.com.br.challengev2.Model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  * Created by gerso on 01/10/2016.
  */
 
-public class Payment {
+public class Payment implements Serializable {
 
 
+    @SerializedName("Id")
     int id;
+
+    @SerializedName("Name")
     String name;
+
+    @SerializedName("Description")
     String description;
+
+    @SerializedName("Reference")
     String reference;
+
+    @SerializedName("Date")
     String date;
+
+    @SerializedName("Sender")
     Sender sender;
 
     public Sender getSender() {

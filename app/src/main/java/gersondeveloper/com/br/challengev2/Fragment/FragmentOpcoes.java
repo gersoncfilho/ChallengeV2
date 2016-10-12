@@ -31,7 +31,7 @@ public class FragmentOpcoes extends Fragment implements View.OnClickListener {
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
     FragmentActivity activity;
-    ArrayList<Product> data_cards = new ArrayList<>();
+    ArrayList<Product> data_cards;
     String tipoProduto;
 
 
@@ -94,6 +94,8 @@ public class FragmentOpcoes extends Fragment implements View.OnClickListener {
 
     private void createDataCards(String tipoProduto)
     {
+        data_cards = new ArrayList<Product>();
+
         switch (tipoProduto)
         {
             case "consolePS4":

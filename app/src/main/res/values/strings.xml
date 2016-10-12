@@ -30,6 +30,10 @@
     <string name="confirmacao_label_product_value">Valor do Produto:</string>
     <string name="confirma">Confirma</string>
     <string name="cancela">Cancela</string>
+    <string name="fechar">Fechar</string>
+
+    //Compras
+    <string name="compra_sucesso">Compra realizada com sucesso. Você receberá seu produto em até 10 dias úteis. Obrigado por comprar com a Challenge Games.</string>
 
 
 </resources>

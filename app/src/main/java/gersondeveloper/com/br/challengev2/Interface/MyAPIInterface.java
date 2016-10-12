@@ -49,8 +49,8 @@ public interface MyAPIInterface {
 
     //PAYMENTS
     //insert payment
-    @POST("api/payment")
-    Call<Payment> postPayment(Payment payment);
+    @POST("api/payments")
+    Call<Payment> postPayment(@Body Payment payment);
 
     //delete payment
     @DELETE("api/payment/{paymentId}")
