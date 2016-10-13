@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import gersondeveloper.com.br.challengev2.Interface.MyAPIInterface;
+import gersondeveloper.com.br.challengev2.Model.Payment;
 import gersondeveloper.com.br.challengev2.Model.User;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -72,6 +73,18 @@ public class RestClient {
     public void registerUser(User user, Callback<User> callback)
     {
         Call<User>call = apiService.postUser(user);
+        call.enqueue(callback);
+    }
+
+    public void registerPayment(Payment payment, Callback<Payment> callback)
+    {
+        Call<Payment>call = apiService.postPayment(payment);
+        call.enqueue(callback);
+    }
+
+    public void deletePayment(Integer paymentId, Callback<Payment> callback)
+    {
+        Call<Payment>call = apiService.deletePayment(paymentId);
         call.enqueue(callback);
     }
 

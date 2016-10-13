@@ -80,7 +80,7 @@ public class FragmentProductDetail extends Fragment implements View.OnClickListe
             Fragment fragment = null;
 
             user = ChallengeUtil.getUser(activity);
-            transaction = new Transaction(user.getUsername(),product.getName(), idPayment, product.getProductValue(), product.getProductImage());
+            transaction = new Transaction(user.getUsername(), user.getEmail(), product.getName(), idPayment, product.getProductValue(), product.getProductImage());
             args.putParcelable("produto_a_confirmar", transaction);
 
             //Starts details fragment

@@ -17,6 +17,9 @@ public class Transaction implements Parcelable {
     @DatabaseField(columnName = "username")
     public String username;
 
+    @DatabaseField(columnName = "email")
+    public String email;
+
     @DatabaseField(columnName = "product_name")
     public String productName;
 
@@ -38,15 +41,20 @@ public class Transaction implements Parcelable {
         this.productImage = produtImage;
     }
 
-
-
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getProductName() {
@@ -74,9 +82,15 @@ public class Transaction implements Parcelable {
     }
 
     //Constructor
-    public Transaction(String username, String productName, int idPayment, double productValue, int productImage)
+    public Transaction()
+    {
+
+    }
+
+    public Transaction(String username, String email, String productName, int idPayment, double productValue, int productImage)
     {
         this.username = username;
+        this.email = email;
         this.productName = productName;
         this.idPayment = idPayment;
         this.productValue = productValue;
@@ -86,6 +100,7 @@ public class Transaction implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(username);
+        parcel.writeString(email);
         parcel.writeString(productName);
         parcel.writeInt(idPayment);
         parcel.writeDouble(productValue);
@@ -96,6 +111,7 @@ public class Transaction implements Parcelable {
     public Transaction(Parcel in)
     {
         this.username = in.readString();
+        this.email = in.readString();
         this.productName = in.readString();
         this.idPayment = in.readInt();
         this.productValue = in.readDouble();
