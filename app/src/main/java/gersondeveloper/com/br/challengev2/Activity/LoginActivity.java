@@ -364,7 +364,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
             //status code 400 = invalid username/password suplied
             //launch snackbar with invalid username/password message
-            else if(statusCode == 400)
+            else if(statusCode == 404)
             {
                 showProgress(false);
                 Toast.makeText(LoginActivity.this, R.string.usuario_invalido, Toast.LENGTH_LONG).show();

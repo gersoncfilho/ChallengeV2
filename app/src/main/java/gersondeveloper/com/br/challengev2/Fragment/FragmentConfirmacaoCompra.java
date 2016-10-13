@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,19 +166,9 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
             //envia transacao para o webservice
 
-            date = sf.format(calendar.getTime());
-            Sender sender = new Sender();
-            sender.setName(transaction.getUsername());
-            sender.setEmail(transaction.getEmail());
-            Payment payment = new Payment();
-            payment.setSender(sender);
-            payment.setName(transactionSender);
-            payment.setDate(date);
-            payment.setDescription(transaction.getProductName());
-            payment.setReference(String.valueOf(transaction.getIdPayment()));
+            Payment payment = Payment.Create(transactionSender, transaction, calendar, sf);
 
             RestClient.getInstance().registerPayment(payment, registerPayment);
-
         }
 
     }
@@ -237,5 +228,21 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             OpenHelperManager.releaseHelper();
             databaseHelper = null;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_UP && i == KeyEvent.KEYCODE_BACK) {
+                    clearBackStack();
+                }
+                return false;
+            }
+        });
     }
 }
