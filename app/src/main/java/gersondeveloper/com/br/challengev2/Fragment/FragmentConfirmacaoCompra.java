@@ -18,13 +18,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
-import gersondeveloper.com.br.challengev2.Data.DatabaseHelper;
+import gersondeveloper.com.br.challengev2.Data.DBHelper;
 import gersondeveloper.com.br.challengev2.Model.Payment;
-import gersondeveloper.com.br.challengev2.Model.Sender;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
@@ -32,12 +32,6 @@ import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by gerso on 09/10/2016.
@@ -47,7 +41,6 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
     public static final String TAG = FragmentConfirmacaoCompra.class.getName();
     public static final String FRAG_ID = "fragment_confirmacao_compra";
-    private DatabaseHelper databaseHelper;
     private TextView textViewProductName, textViewIdPayment, textViewProductValue;
     private Button buttonCancel, buttonSubmit;
     private ImageView imageViewProduct;
@@ -83,6 +76,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         RestClient.initialize();
         calendar = Calendar.getInstance();
         sf = new SimpleDateFormat("dd-mm-yyyy");
+
+
 
     }
 
@@ -139,14 +134,14 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     }
 
     //Initialize DatabaseHelper
-    private DatabaseHelper getDatabaseHelper()
+    /*private DatabaseHelper getDatabaseHelper()
     {
         if(databaseHelper == null)
         {
             databaseHelper = OpenHelperManager.getHelper(activity, DatabaseHelper.class);
         }
         return databaseHelper;
-    }
+    }*/
 
     @Override
     public void onClick(View view) {
@@ -160,14 +155,12 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         {
             progressBar.setVisibility(View.VISIBLE);
             //grava dados o banco para futuro cancelamento de compra se necessario
-            try {
-                final Dao<Transaction, Integer> transactionDao = getDatabaseHelper().getTransactionDAO();
-                transactionDao.create(transaction);
-                Log.d(TAG, "Registro salvo com sucesso!");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
+                try
+                {
+                    DBHelper.getInstance(getContext()).getTransactionDAO().create(transaction);
+                }catch(SQLException ex){
+                    ex.printStackTrace();
+                }
             //envia transacao para o webservice
 
             Payment payment = Payment.Create(transactionSender, transaction, calendar, sf);
@@ -217,21 +210,6 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         for(int i = 0;i<fm.getBackStackEntryCount();i++)
         {
             fm.popBackStack();
-        }
-    }
-
-    /**
-     * Called when the fragment is no longer in use.  This is called
-     * after {@link #onStop()} and before {@link #onDetach()}.
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //Release helper when finish
-        if(databaseHelper != null)
-        {
-            OpenHelperManager.releaseHelper();
-            databaseHelper = null;
         }
     }
 

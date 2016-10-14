@@ -3,26 +3,22 @@ package gersondeveloper.com.br.challengev2.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.google.gson.Gson;
-
 import gersondeveloper.com.br.challengev2.Fragment.FragmentCompras;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
-import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 
@@ -100,11 +96,16 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.content_frame, fragment, FragmentCompras.FRAG_ID);
                 transaction.addToBackStack(FragmentCompras.FRAG_ID);
                 transaction.commit();
+
                 return true;
 
             case R.id.action_logout:
                 logout();
                 return true;
+
+            case R.id.action_debug:
+                Intent intent = new Intent(MainActivity.this, AndroidDatabaseManager.class);
+                startActivity(intent);
 
              default:
                  return super.onOptionsItemSelected(item);

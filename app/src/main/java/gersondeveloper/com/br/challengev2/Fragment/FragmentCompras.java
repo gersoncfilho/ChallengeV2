@@ -1,7 +1,5 @@
 package gersondeveloper.com.br.challengev2.Fragment;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,17 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.sql.SQLException;
-
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import gersondeveloper.com.br.challengev2.Data.DatabaseHelper;
-import gersondeveloper.com.br.challengev2.Model.Product;
+import gersondeveloper.com.br.challengev2.Adapter.ComprasAdapter;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
@@ -43,13 +34,12 @@ public class FragmentCompras extends Fragment {
     FragmentActivity activity;
 
 
-    private DatabaseHelper databaseHelper = null;
-
     private TextView idPaymentTextView, productValueTextView, productNameTextView;
     private ImageView productImageView;
     private Button cancelaTransactionButton;
-    private Dao<Transaction,Integer> transactionDao;
+
     private String username;
+
     private ArrayList<Transaction> transactions = new ArrayList<Transaction>();;
 
 
@@ -73,17 +63,29 @@ public class FragmentCompras extends Fragment {
         User user = new User();
         user = ChallengeUtil.getUser(activity);
         username = user.getUsername();
-        transactions = getTransactions(user);
+        //transactions = getTransactions(user);
+
+        recyclerView.setAdapter(new ComprasAdapter(activity, transactions));
 
         return view;
     }
 
-    private ArrayList<Transaction> getTransactions(User user)
+    /*private ArrayList<Transaction> getTransactions(User user)
     {
-        try
+       try
         {
+            DatabaseHelper databaseHelper = new DatabaseHelper(activity);
+            Dao<Transaction, Integer> transactionDao = null;
+
+            try
+            {
+                transactionDao = databaseHelper.getTransactionDAO();
+            }catch(SQLException ex){
+                ex.printStackTrace();
+            }
+
             final ArrayList<Transaction> transactionsList = new ArrayList<Transaction>();
-            transactionDao = databaseHelper.getTransactionDAO();
+
             final QueryBuilder<Transaction, Integer> queryBuilder = transactionDao.queryBuilder();
             queryBuilder.where().eq(Transaction.USERNAME, user.getUsername());
 
@@ -101,6 +103,6 @@ public class FragmentCompras extends Fragment {
         }catch(SQLException ex){
             ex.printStackTrace();
             return null;
-        }
-    }
+        }*/
+    //}
 }
