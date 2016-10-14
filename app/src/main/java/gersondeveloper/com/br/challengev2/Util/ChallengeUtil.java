@@ -85,7 +85,7 @@ public class ChallengeUtil {
         sharedPreferences.edit().putString(PHONE, user.getPhone()).apply();
     }
 
-    public static void saveTransaction(Context context, Payment payment, Sender sender)
+/*    public static void saveTransaction(Context context, Payment payment, Sender sender)
     {
         Gson gson = new Gson();
         String objetctJson = gson.toJson(sender);
@@ -96,6 +96,16 @@ public class ChallengeUtil {
         sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
         sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
         sharedPreferences.edit().putString(SENDER,sender.toString()).apply();
+    }*/
+
+    public static void logout(Context context)
+    {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME, context.MODE_PRIVATE);
+        sharedPreferences.edit().remove(USERNAME).apply();
+        sharedPreferences.edit().remove(FIRST_NAME).apply();
+        sharedPreferences.edit().remove(LAST_NAME).apply();
+        sharedPreferences.edit().remove(EMAIL).apply();
+        sharedPreferences.edit().remove(PHONE).apply();
     }
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);

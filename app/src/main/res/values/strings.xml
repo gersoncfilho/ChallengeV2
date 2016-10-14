@@ -32,6 +32,11 @@
     <string name="cancela">Cancela</string>
     <string name="fechar">Fechar</string>
 
+    <!--Menu-->
+    <string name="logout">Logout</string>
+    <string name="minhas_compras">Minhas Compras</string>
+    <string name="logout_message">Deseja realmente dar logout da aplicação?</string>
+
     //Compras
     <string name="compra_sucesso">Compra realizada com sucesso. Você receberá seu produto em até 10 dias úteis. Obrigado por comprar com a Challenge Games.</string>
 
