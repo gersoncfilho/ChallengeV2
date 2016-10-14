@@ -11,10 +11,17 @@ import com.j256.ormlite.field.DatabaseField;
 
 public class Transaction implements Parcelable {
 
-    @DatabaseField(generatedId = true, columnName = "id_transaction")
+    private static final long serialVersionUID = -222864131214757024L;
+
+    public static final String ID_TRANSACTION = "id_transaction";
+
+    public static final String USERNAME = "username";
+
+
+    @DatabaseField(generatedId = true, columnName = ID_TRANSACTION)
     public int idTransaction;
 
-    @DatabaseField(columnName = "username")
+    @DatabaseField(columnName = USERNAME)
     public String username;
 
     @DatabaseField(columnName = "email")

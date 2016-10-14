@@ -101,7 +101,7 @@ public class CadastroActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
 
                     User user = new User();
                     user.setUsername(username.getText().toString());
@@ -111,6 +111,8 @@ public class CadastroActivity extends AppCompatActivity {
                     user.setPassword(password.getText().toString());
                     user.setPhone(phone.getText().toString());
 
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+                    progressBar.setVisibility(View.VISIBLE);
                     RestClient.getInstance().registerUser(user, registerCallback);
 
 
@@ -125,6 +127,7 @@ public class CadastroActivity extends AppCompatActivity {
         @Override
         public void onResponse(Call<User> call, Response<User> response) {
             Log.d(TAG,"registerCallback response:" + response.body().toString());
+            progressBar.setVisibility(View.GONE);
             Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
             startActivity(intent);
         }
@@ -147,5 +150,6 @@ public class CadastroActivity extends AppCompatActivity {
         this.phone = (EditText) findViewById(R.id.editTextPhone);
         this.email = (EditText) findViewById(R.id.editTextEmail);
         this.btnRegistrar = (Button) findViewById(R.id.buttonSalvar);
+        progressBar = (ProgressBar) findViewById(R.id.cadastro_progress_bar);
     }
 }

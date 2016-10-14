@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -56,6 +57,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     Calendar calendar;
     private String date;
     SimpleDateFormat sf;
+    ProgressBar progressBar;
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -113,6 +115,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         imageViewProduct = (ImageView) view.findViewById(R.id.confirmacaoImageViewProduto);
         buttonSubmit = (Button) view.findViewById(R.id.confirmaButtonConfirma);
         buttonCancel = (Button) view.findViewById(R.id.confirmaButtonCancela);
+        progressBar = (ProgressBar) view.findViewById(R.id.confirma_progress_bar);
 
         buttonCancel.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
@@ -155,6 +158,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
         if(view == buttonSubmit)
         {
+            progressBar.setVisibility(View.VISIBLE);
             //grava dados o banco para futuro cancelamento de compra se necessario
             try {
                 final Dao<Transaction, Integer> transactionDao = getDatabaseHelper().getTransactionDAO();
@@ -178,6 +182,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         public void onResponse(Call<Payment> call, Response<Payment> response) {
             Log.d(TAG, "Successful response.");
             Log.d(TAG, "Response code: " + String.valueOf(response.code()));
+            progressBar.setVisibility(View.GONE);
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setPositiveButton(R.string.fechar, new DialogInterface.OnClickListener() {
                 @Override

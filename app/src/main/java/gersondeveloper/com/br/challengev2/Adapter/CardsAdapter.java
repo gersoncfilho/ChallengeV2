@@ -35,8 +35,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
     private ArrayList<Product> dataSet;
     FragmentActivity activity;
     LayoutInflater inflater;
-    CardView cardView;
-    List<Product> products;
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
 
