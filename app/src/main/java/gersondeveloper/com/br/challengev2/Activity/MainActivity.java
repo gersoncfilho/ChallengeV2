@@ -103,9 +103,10 @@ public class MainActivity extends AppCompatActivity {
                 logout();
                 return true;
 
-            case R.id.action_debug:
+            //debug
+            /*case R.id.action_debug:
                 Intent intent = new Intent(MainActivity.this, AndroidDatabaseManager.class);
-                startActivity(intent);
+                startActivity(intent);*/
 
              default:
                  return super.onOptionsItemSelected(item);
