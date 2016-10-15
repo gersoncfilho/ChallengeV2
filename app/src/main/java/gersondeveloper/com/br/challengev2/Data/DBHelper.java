@@ -14,6 +14,7 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 
 /**
@@ -22,13 +23,33 @@ import gersondeveloper.com.br.challengev2.Model.Transaction;
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String TAG = DBHelper.class.getName();
-    private static final String DATABASE_NAME = "database_name";
-    private static final String DATABASE_TABLE = "database_table";
+    private static final String DATABASE_NAME = "dbChallengeV2";
+    private static final String DATABASE_TABLE = "transactions_table";
     private static final int DATABASE_VERSION = 1;
 
     private Dao<Transaction, Integer> transactionsDAO;
 
     private static DBHelper sInstance;
+    //Singleton Initializer
+    public static void initialize()
+    {
+        if(instance == null)
+        {
+            instance = new RestClient();
+        }
+    }
+
+    //Singleton Instance Getter
+    public static RestClient getInstance()
+    {
+        initialize();
+
+        return instance;
+    }
+
+
+
+
 
     public static synchronized DBHelper getInstance(Context context)
     {

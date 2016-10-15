@@ -74,6 +74,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         super.onCreate(savedInstanceState);
         activity = getActivity();
         RestClient.initialize();
+        DBHelper.
         calendar = Calendar.getInstance();
         sf = new SimpleDateFormat("dd-mm-yyyy");
 
@@ -157,7 +158,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             //grava dados o banco para futuro cancelamento de compra se necessario
                 try
                 {
-                    DBHelper.getInstance(getContext()).getTransactionDAO().create(transaction);
+                    DBHelper.getInstance(activity.getApplicationContext()).getTransactionDAO();
+
                 }catch(SQLException ex){
                     ex.printStackTrace();
                 }
