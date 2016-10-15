@@ -8,11 +8,14 @@ import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
@@ -24,43 +27,12 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String TAG = DBHelper.class.getName();
     private static final String DATABASE_NAME = "dbChallengeV2";
-    private static final String DATABASE_TABLE = "transactions_table";
     private static final int DATABASE_VERSION = 1;
+    Context context;
 
-    private Dao<Transaction, Integer> transactionsDAO;
+    private Dao<Transaction, Integer> transactionDAO = null;
 
-    private static DBHelper sInstance;
-    //Singleton Initializer
-    public static void initialize()
-    {
-        if(instance == null)
-        {
-            instance = new RestClient();
-        }
-    }
-
-    //Singleton Instance Getter
-    public static RestClient getInstance()
-    {
-        initialize();
-
-        return instance;
-    }
-
-
-
-
-
-    public static synchronized DBHelper getInstance(Context context)
-    {
-        if(sInstance == null)
-        {
-            sInstance = new DBHelper(context.getApplicationContext());
-        }
-        return sInstance;
-    }
-
-    private DBHelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -112,10 +84,10 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     }
     // create dao methods
     public Dao<Transaction, Integer> getTransactionDAO() throws SQLException {
-        if (transactionsDAO == null) {
-            transactionsDAO = getDao(Transaction.class);
+        if (transactionDAO == null) {
+            transactionDAO = getDao(Transaction.class);
         }
-        return transactionsDAO;
+        return transactionDAO;
     }
 
 
@@ -125,13 +97,7 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     }
 
 
-    /*public ArrayList<Transaction> getTransactions(String query)
-    {
-        ArrayList<Transaction> transactions = new ArrayList<>();
 
-        return transactions;
-    }
-*/
 
     public ArrayList<Cursor> getData(String Query){
         //get writable database

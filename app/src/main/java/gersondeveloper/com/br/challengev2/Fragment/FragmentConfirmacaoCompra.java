@@ -18,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,6 +55,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     SimpleDateFormat sf;
     ProgressBar progressBar;
 
+    DBHelper dbHelper;
+
     /**
      * Called to do initial creation of a fragment.  This is called after
      * {@link #onAttach(Activity)} and before
@@ -74,7 +79,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         super.onCreate(savedInstanceState);
         activity = getActivity();
         RestClient.initialize();
-        DBHelper.
+
+
         calendar = Calendar.getInstance();
         sf = new SimpleDateFormat("dd-mm-yyyy");
 
@@ -134,15 +140,12 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         return view;
     }
 
-    //Initialize DatabaseHelper
-    /*private DatabaseHelper getDatabaseHelper()
-    {
-        if(databaseHelper == null)
-        {
-            databaseHelper = OpenHelperManager.getHelper(activity, DatabaseHelper.class);
+    private DBHelper getHelper() {
+        if (dbHelper == null) {
+            dbHelper = OpenHelperManager.getHelper(activity.getApplicationContext(),DBHelper.class);
         }
-        return databaseHelper;
-    }*/
+        return dbHelper;
+    }
 
     @Override
     public void onClick(View view) {
@@ -158,7 +161,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             //grava dados o banco para futuro cancelamento de compra se necessario
                 try
                 {
-                    DBHelper.getInstance(activity.getApplicationContext()).getTransactionDAO();
+                    final Dao<Transaction, Integer> transactionDAO = getHelper().getTransactionDAO();
+                    transactionDAO.create(transaction);
 
                 }catch(SQLException ex){
                     ex.printStackTrace();
@@ -212,6 +216,16 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         for(int i = 0;i<fm.getBackStackEntryCount();i++)
         {
             fm.popBackStack();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(dbHelper != null)
+        {
+            OpenHelperManager.releaseHelper();
+            dbHelper = null;
         }
     }
 

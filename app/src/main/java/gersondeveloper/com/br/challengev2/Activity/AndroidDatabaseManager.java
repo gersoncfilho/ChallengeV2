@@ -1,7 +1,5 @@
 package gersondeveloper.com.br.challengev2.Activity;
 
-//add your package name here example: package com.example.dbm;
-
 //all required import files
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -56,7 +54,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 
     //in the below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name.
     //Do not change the variable name dbm
-   // DBHelper dbm;
+    DBHelper dbm;
     TableLayout tableLayout;
     TableRow.LayoutParams tableRowParams;
     HorizontalScrollView hsv;
@@ -75,7 +73,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
 
 
         //in the below line Change the text 'yourCustomSqlHelper' with your custom sqlitehelper class name
-       // dbm = new DBHelper(AndroidDatabaseManager.this);
+        dbm = new DBHelper(AndroidDatabaseManager.this);
 
         mainscrollview = new ScrollView(AndroidDatabaseManager.this);
 
@@ -218,7 +216,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
                 String Query10=customquerytext.getText().toString();
                 Log.d("query",Query10);
                 //pass the query to getdata method and get results
-                alc2 = DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query10);
+                alc2 = dbm.getData(Query10);
                 final Cursor c4=alc2.get(0);
                 Cursor Message2 =alc2.get(1);
                 Message2.moveToLast();
@@ -255,7 +253,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
         tableRowParams.setMargins(0, 0, 2, 0);
 
         // a query which returns a cursor with the list of tables in the database.We use this cursor to populate spinner in the first row
-        alc = DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query);
+        alc = dbm.getData(Query);
 
         //the first cursor has reults of the query
         final Cursor c=alc.get(0);
@@ -388,7 +386,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
                     Log.d("",""+Query2);
 
                     //getting contents of the table which user selected from the select_table spinner
-                    ArrayList<Cursor> alc2=DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query2);
+                    ArrayList<Cursor> alc2=dbm.getData(Query2);
                     final Cursor c2=alc2.get(0);
                     //saving cursor to the static indexinfo class which can be resued by the other functions
                     indexInfo.maincursor=c2;
@@ -428,7 +426,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
                                                                     public void onClick(DialogInterface dialog, int which) {
 
                                                                         String Query6 = "Drop table "+indexInfo.table_name;
-                                                                        ArrayList<Cursor> aldropt=DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query6);
+                                                                        ArrayList<Cursor> aldropt=dbm.getData(Query6);
                                                                         Cursor tempc=aldropt.get(1);
                                                                         tempc.moveToLast();
                                                                         Log.d("Drop table Mesage",tempc.getString(0));
@@ -476,7 +474,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
                                                                     public void onClick(DialogInterface dialog, int which) {
                                                                         String Query7 = "Delete  from "+indexInfo.table_name;
                                                                         Log.d("delete table query",Query7);
-                                                                        ArrayList<Cursor> aldeletet=DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query7);
+                                                                        ArrayList<Cursor> aldeletet=dbm.getData(Query7);
                                                                         Cursor tempc=aldeletet.get(1);
                                                                         tempc.moveToLast();
                                                                         Log.d("Delete table Mesage",tempc.getString(0));
@@ -639,7 +637,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
                                                                         }
                                                                         //this is the insert query which has been generated
                                                                         Log.d("Insert Query",Query4);
-                                                                        ArrayList<Cursor> altc=DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query4);
+                                                                        ArrayList<Cursor> altc=dbm.getData(Query4);
                                                                         Cursor tempc=altc.get(1);
                                                                         tempc.moveToLast();
                                                                         Log.d("Add New Row",tempc.getString(0));
@@ -740,7 +738,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
     //get columnnames of the empty tables and save them in a array list
     public void getcolumnnames()
     {
-        ArrayList<Cursor> alc3=DBHelper.getInstance(AndroidDatabaseManager.this).getData("PRAGMA table_info("+indexInfo.table_name+")");
+        ArrayList<Cursor> alc3=dbm.getData("PRAGMA table_info("+indexInfo.table_name+")");
         Cursor c5=alc3.get(0);
         indexInfo.isEmpty=true;
         if(c5!=null)
@@ -952,7 +950,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
                                                 }
                                                 Log.d("Update Query",Query3);
                                                 //dbm.getData(Query3);
-                                                ArrayList<Cursor> aluc=DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query3);
+                                                ArrayList<Cursor> aluc=dbm.getData(Query3);
                                                 Cursor tempc=aluc.get(1);
                                                 tempc.moveToLast();
                                                 Log.d("Update Mesage",tempc.getString(0));
@@ -1001,9 +999,9 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
                                                 }
                                                 Log.d("Delete Query",Query5);
 
-                                                DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query5);
+                                                dbm.getData(Query5);
 
-                                                ArrayList<Cursor> aldc=DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query5);
+                                                ArrayList<Cursor> aldc=dbm.getData(Query5);
                                                 Cursor tempc=aldc.get(1);
                                                 tempc.moveToLast();
                                                 Log.d("Update Mesage",tempc.getString(0));
@@ -1049,7 +1047,7 @@ public class AndroidDatabaseManager extends Activity implements OnItemClickListe
         if(d==0)
         {
             String Query8 = "select * from "+indexInfo.table_name;
-            ArrayList<Cursor> alc3=DBHelper.getInstance(AndroidDatabaseManager.this).getData(Query8);
+            ArrayList<Cursor> alc3=dbm.getData(Query8);
             c3=alc3.get(0);
             //saving cursor to the static indexinfo class which can be resued by the other functions
             indexInfo.maincursor=c3;
