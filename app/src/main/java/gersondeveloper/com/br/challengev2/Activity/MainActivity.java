@@ -1,5 +1,6 @@
 package gersondeveloper.com.br.challengev2.Activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -12,9 +13,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import gersondeveloper.com.br.challengev2.Fragment.FragmentCompras;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
@@ -25,8 +28,6 @@ import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 public class MainActivity extends AppCompatActivity {
 
     private Fragment contentFragment;
-    FragmentPrincipal fragmentPrincipal;
-    FragmentProductDetail fragmentProductDetail;
     Toolbar toolbar;
     Bundle bundle;
     Fragment fragment;
@@ -103,9 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 logout();
                 return true;
 
-            case R.id.action_debug:
+            //debug
+            /*case R.id.action_debug:
                 Intent intent = new Intent(MainActivity.this, AndroidDatabaseManager.class);
-                startActivity(intent);
+                startActivity(intent);*/
 
              default:
                  return super.onOptionsItemSelected(item);
@@ -121,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 ChallengeUtil.logout(MainActivity.this);
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                //clear backstack on logout
+                clearBackStack();
                 startActivity(intent);
             }
         });
@@ -137,6 +141,14 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    private void clearBackStack() {
+        FragmentManager fm = this.activity.getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

@@ -10,8 +10,8 @@
         app:showAsAction="never"
         android:title="@string/logout" android:id="@+id/action_logout"/>
 
-    <item
+    <!--<item
         app:showAsAction="never"
-        android:title="debug" android:id="@+id/action_debug"/>
+        android:title="debug" android:id="@+id/action_debug"/>-->
 
 </menu>

@@ -6,13 +6,6 @@
     android:layout_height="match_parent">
 
 
-    <!--<fragment
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:id="@+id/fragment_opcoes"
-        class="gersondeveloper.com.br.challengev2.Fragment.OpcoesFragment"
-        tools:layout="@layout/fragment_opcoes" />-->
     
     <RelativeLayout
         android:layout_width="match_parent"

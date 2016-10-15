@@ -39,6 +39,8 @@
 
     //Compras
     <string name="compra_sucesso">Compra realizada com sucesso. Você receberá seu produto em até 10 dias úteis. Obrigado por comprar com a Challenge Games.</string>
-
+    <string name="cancelar">Confirma</string>
+    <string name="cancelar_compra_message">Você confirma o cancelamento desta compra?</string>
+    <string name="cancelar_compra">Cancelar Compra</string>
 
 </resources>
