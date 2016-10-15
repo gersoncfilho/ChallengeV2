@@ -4,11 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by gerso on 09/10/2016.
  */
 
+@DatabaseTable
 public class Transaction implements Parcelable {
 
     private static final long serialVersionUID = -222864131214757024L;

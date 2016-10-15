@@ -104,13 +104,13 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     }
 
 
-    public ArrayList<Transaction> getTransactions(String query)
+    /*public ArrayList<Transaction> getTransactions(String query)
     {
         ArrayList<Transaction> transactions = new ArrayList<>();
 
         return transactions;
     }
-
+*/
 
     public ArrayList<Cursor> getData(String Query){
         //get writable database
