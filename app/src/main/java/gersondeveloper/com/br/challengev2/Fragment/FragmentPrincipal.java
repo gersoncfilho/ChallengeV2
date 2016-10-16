@@ -1,5 +1,6 @@
 package gersondeveloper.com.br.challengev2.Fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +20,7 @@ import gersondeveloper.com.br.challengev2.Adapter.OpcoesAdapter;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.MySeedData;
-import me.relex.circleindicator.CircleIndicator;
+
 
 /**
  * Created by gerso on 02/10/2016.
@@ -33,7 +34,6 @@ public class FragmentPrincipal extends Fragment {
 
     ArrayList<Product> data, data_cards;
     ViewPager viewPager;
-    CircleIndicator circleIndicator;
     FragmentActivity activity;
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
@@ -42,6 +42,18 @@ public class FragmentPrincipal extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+
+        //if orientation landscape, configures gridlayoutmanager to only one card per column, otherwise two
+        if (getActivity().getResources().getConfiguration().smallestScreenWidthDp <= 320 || getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            Log.d("TAG", "small screen");
+            gridLayoutManager = new GridLayoutManager(getActivity(),1);
+        }
+            else
+        {
+            Log.d("TAG", "big screen");
+            gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        }
 
     }
 
@@ -53,7 +65,7 @@ public class FragmentPrincipal extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.opcoes_view_pager);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_cards);
-        gridLayoutManager = new GridLayoutManager(getActivity(),2);
+
         recyclerView.setLayoutManager(gridLayoutManager);
 
         data = new ArrayList<Product>();
