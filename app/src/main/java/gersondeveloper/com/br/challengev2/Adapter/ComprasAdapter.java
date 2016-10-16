@@ -77,7 +77,7 @@ public class ComprasAdapter extends RecyclerView.Adapter<ComprasAdapter.MyViewHo
         ImageView imageViewProduct = holder.imageViewProduct;
 
         textViewName.setText(dataset.get(position).getProductName());
-        textViewPrice.setText(String.valueOf(dataset.get(position).getProductValue()));
+        textViewPrice.setText(ChallengeUtil.formatPrice(dataset.get(position).getProductValue()));
         textIdPayment.setText(String.valueOf(dataset.get(position).getIdPayment()));
         imageViewProduct.setImageResource(dataset.get(position).getProdutImage());
     }

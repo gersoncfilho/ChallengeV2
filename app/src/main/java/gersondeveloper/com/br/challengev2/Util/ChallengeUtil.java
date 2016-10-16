@@ -13,8 +13,11 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -114,6 +117,16 @@ public class ChallengeUtil {
     {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
+    }
+
+    public static String formatPrice(Double price)
+    {
+        Locale locale = new Locale("pt","BR");
+        Currency currency = Currency.getInstance(locale);
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        String priceFormatted = currencyFormatter.format(price);
+
+        return priceFormatted;
     }
 
     public static boolean isUserResgistered(Context context)

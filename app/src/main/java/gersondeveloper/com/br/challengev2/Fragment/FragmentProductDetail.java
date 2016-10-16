@@ -63,7 +63,7 @@ public class FragmentProductDetail extends Fragment implements View.OnClickListe
             product = bundle.getParcelable("product");
             textViewProductName.setText(product.getName());
             textViewProductDescription.setText(product.getDescription());
-            textViewProductValue.setText(String.valueOf(product.getProductValue()));
+            textViewProductValue.setText(ChallengeUtil.formatPrice(product.getProductValue()));
             productImageView.setImageResource(product.getProductImage());
         }
 

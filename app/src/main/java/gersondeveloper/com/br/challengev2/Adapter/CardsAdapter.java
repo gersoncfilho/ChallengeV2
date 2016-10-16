@@ -20,11 +20,13 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.R;
+import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 
 /**
  * Created by gerso on 05/10/2016.
@@ -35,6 +37,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
     private ArrayList<Product> dataSet;
     FragmentActivity activity;
     LayoutInflater inflater;
+    Locale locale = Locale.ENGLISH;
 
         public static class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -78,7 +81,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.MyViewHolder
             CardView cardView = holder.cardview;
 
             textViewName.setText(dataSet.get(listPosition).getName());
-            textViewPrice.setText(String.valueOf(dataSet.get(listPosition).getProductValue()));
+            textViewPrice.setText(ChallengeUtil.formatPrice(dataSet.get(listPosition).getProductValue()));
             textViewDescription.setText(dataSet.get(listPosition).getDescription());
             imageViewProduct.setImageResource(dataSet.get(listPosition).getProductImage());
 

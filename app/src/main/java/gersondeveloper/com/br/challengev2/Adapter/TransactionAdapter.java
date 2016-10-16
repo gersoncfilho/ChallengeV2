@@ -35,6 +35,7 @@ import gersondeveloper.com.br.challengev2.Model.Payment;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.R;
+import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,7 +97,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         textViewIdPayment.setText(String.valueOf(dataSet.get(listPosition).getIdPayment()));
         textViewProductName.setText(dataSet.get(listPosition).getProductName());
-        textViewProductValue.setText(String.valueOf(dataSet.get(listPosition).getProductValue()));
+        textViewProductValue.setText(ChallengeUtil.formatPrice(dataSet.get(listPosition).getProductValue()));
         imageViewProduct.setImageResource(dataSet.get(listPosition).getProdutImage());
 
         cancelaCompraButton.setOnClickListener(new View.OnClickListener() {

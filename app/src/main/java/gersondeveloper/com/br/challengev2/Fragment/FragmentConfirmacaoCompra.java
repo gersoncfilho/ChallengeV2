@@ -133,7 +133,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             transaction.setEmail(user.getEmail());
             textViewProductName.setText(transaction.getProductName());
             textViewIdPayment.setText(String.valueOf(transaction.getIdPayment()));
-            textViewProductValue.setText(String.valueOf(transaction.getProductValue()));
+            textViewProductValue.setText(ChallengeUtil.formatPrice(transaction.getProductValue()));
             imageViewProduct.setImageResource(transaction.getProdutImage());
         }
         
