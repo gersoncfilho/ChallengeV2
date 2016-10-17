@@ -114,10 +114,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             //debug
-            case R.id.action_debug:
+            /*case R.id.action_debug:
                 Intent intent = new Intent(MainActivity.this, AndroidDatabaseManager.class);
                 startActivity(intent);
-                return true;
+                return true;*/
 
              default:
                  return super.onOptionsItemSelected(item);
