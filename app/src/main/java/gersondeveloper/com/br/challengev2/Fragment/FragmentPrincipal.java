@@ -1,14 +1,17 @@
 package gersondeveloper.com.br.challengev2.Fragment;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +43,7 @@ public class FragmentPrincipal extends Fragment {
     GridLayoutManager gridLayoutManager;
     LinearLayoutManager linearLayoutManager;
     View view;
+    Toolbar toolbar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +59,9 @@ public class FragmentPrincipal extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, ("FragmentPincipal_onCreateView"));
 
+
         view = inflater.inflate(R.layout.fragment_principal, container, false);
+
         viewPager = (ViewPager) view.findViewById(R.id.opcoes_view_pager);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_cards);

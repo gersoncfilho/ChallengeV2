@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,20 @@ import android.widget.TextView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.Inflater;
 
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
@@ -49,6 +57,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private ArrayList<Transaction> dataSet;
     FragmentActivity activity;
     LayoutInflater inflater;
+    Boolean registroApagado;
 
     private Dao<Transaction, Integer> transactionDAO;
     private DBHelper dbHelper;
@@ -107,9 +116,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 builder.setPositiveButton(R.string.cancelar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        int idPayment = dataSet.get(listPosition).getIdPayment();
+                        String idPayment = dataSet.get(listPosition).getIdPayment();
 
                         RestClient.getInstance().deletePayment(idPayment, cancelaTransacao);
+
+
                     }
                 });
 
@@ -130,28 +141,60 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private Callback<Payment> cancelaTransacao = new Callback<Payment>() {
         @Override
         public void onResponse(Call<Payment> call, Response<Payment> response) {
-            /*try {
-                transactionDAO = getHelper().getTransactionDAO();
-                final QueryBuilder<Transaction, Integer> queryBuilder = transactionDAO.queryBuilder();
-                queryBuilder.where().eq(Transaction.ID_TRANSACTION, dataSet.get());
-                final PreparedQuery<Transaction> preparedQuery = queryBuilder.prepare();
-                final Iterator<Transaction> transactionIterator = transactionDAO.query(preparedQuery).iterator();
-                while(transactionIterator.hasNext())
-                {
-                    final Transaction transaction1 = transactionIterator.next();
-                    transactions.add(transaction1);
-                }
 
+            int statusCode = response.code();
+            String responseUrl = response.raw().networkResponse().toString();
+            Map<String, List<String>> id = getQueryParams(responseUrl);
+            String idPayment = id.get("idPayment").toString().replace("}","");
+
+            Log.d("onResponse", "idPayment: " + idPayment);
+
+            try {
+                transactionDAO = getHelper().getTransactionDAO();
+                DeleteBuilder<Transaction, Integer> deleteBuilder = transactionDAO.deleteBuilder();
+                deleteBuilder.where().eq("ID_PAYMENT",idPayment);
+                deleteBuilder.delete();
             } catch (SQLException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
 
         @Override
         public void onFailure(Call<Payment> call, Throwable t) {
-
+            Log.d("onFailure","failure");
         }
     };
+
+
+    public static Map<String, List<String>> getQueryParams(String url) {
+        try {
+            url.replace("}","");
+            Map<String, List<String>> params = new HashMap<String, List<String>>();
+            String[] urlParts = url.split("\\?");
+            if (urlParts.length > 1) {
+                String query = urlParts[1];
+                for (String param : query.split("&")) {
+                    String[] pair = param.split("=");
+                    String key = URLDecoder.decode(pair[0], "UTF-8");
+                    String value = "";
+                    if (pair.length > 1) {
+                        value = URLDecoder.decode(pair[1], "UTF-8");
+                    }
+
+                    List<String> values = params.get(key);
+                    if (values == null) {
+                        values = new ArrayList<String>();
+                        params.put(key, values);
+                    }
+                    values.add(value);
+                }
+            }
+
+            return params;
+        } catch (UnsupportedEncodingException ex) {
+            throw new AssertionError(ex);
+        }
+    }
 
     private DBHelper getHelper() {
         if (dbHelper == null) {

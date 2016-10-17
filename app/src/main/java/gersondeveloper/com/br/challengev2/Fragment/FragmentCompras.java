@@ -57,11 +57,6 @@ public class FragmentCompras extends Fragment {
 
     private ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 
-
-
-
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
