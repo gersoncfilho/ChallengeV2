@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,8 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -50,7 +54,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
     public static final String TAG = FragmentConfirmacaoCompra.class.getName();
     public static final String FRAG_ID = "fragment_confirmacao_compra";
-    private TextView textViewProductName, textViewIdPayment, textViewProductValue;
+    private TextView textViewProductName, textViewIdPayment, textViewProductValue, textViewconfirmaAguarde;
     private Button buttonCancel, buttonSubmit;
     private ImageView imageViewProduct;
     Activity activity;
@@ -60,6 +64,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     private String date;
     SimpleDateFormat sf;
     ProgressBar progressBar;
+    View root;
 
     DBHelper dbHelper;
 
@@ -88,7 +93,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             case REQUEST_EXTERNAL_STORAGE:
                 if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
-                    confirmaCompra();
+                    Log.d(TAG, "permission granted");
+                    //confirmaCompra();
                 }
                 else
                 {
@@ -159,6 +165,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         buttonSubmit = (Button) view.findViewById(R.id.confirmaButtonConfirma);
         buttonCancel = (Button) view.findViewById(R.id.confirmaButtonCancela);
         progressBar = (ProgressBar) view.findViewById(R.id.confirma_progress_bar);
+        textViewconfirmaAguarde = (TextView) view.findViewById(R.id.confirma_aguarde_text_view);
+        root = (LinearLayout) view.findViewById(R.id.confirma_main_relative_layout);
 
         buttonCancel.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
@@ -209,7 +217,12 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         {
             if(ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
             {
-                Snackbar.make(getView().findViewById(R.id.content_frame), R.string.permission_internet, Snackbar.LENGTH_SHORT)
+
+               //Toast.makeText(activity, R.string.permission_internet, Toast.LENGTH_SHORT).show();
+
+
+
+                Snackbar.make(root, R.string.permission_internet, Snackbar.LENGTH_SHORT)
                         .setAction(R.string.ok, new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -224,11 +237,16 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
             }
         }
+        else
+        {
+           confirmaCompra();
+        }
     }
 
     private void confirmaCompra()
     {
         progressBar.setVisibility(View.VISIBLE);
+        textViewconfirmaAguarde.setVisibility(View.VISIBLE);
         //grava dados o banco para futuro cancelamento de compra se necessario
         try
         {
@@ -249,6 +267,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             Log.d(TAG, "Successful response.");
             Log.d(TAG, "Response code: " + String.valueOf(response.code()));
             progressBar.setVisibility(View.GONE);
+            textViewconfirmaAguarde.setVisibility(View.GONE);
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setPositiveButton(R.string.fechar, new DialogInterface.OnClickListener() {
                 @Override
