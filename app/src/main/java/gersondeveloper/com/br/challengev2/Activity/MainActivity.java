@@ -25,11 +25,17 @@ import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getName();
+
+    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+
     private Fragment contentFragment;
     Toolbar toolbar;
     Bundle bundle;
     Fragment fragment;
     FragmentActivity activity;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         int width = metrics.widthPixels;
 
         setContentView(R.layout.activity_main);
-
-
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.content_frame, fragment, FragmentCompras.FRAG_ID);
                 transaction.addToBackStack(FragmentCompras.FRAG_ID);
                 transaction.commit();
-
-
 
                 return true;
 

@@ -31,6 +31,7 @@
     <string name="confirma">Confirma</string>
     <string name="cancela">Cancela</string>
     <string name="fechar">Fechar</string>
+    <string name="ok">OK</string>
 
     <!--Menu-->
     <string name="logout">Logout</string>
@@ -42,5 +43,8 @@
     <string name="cancelar">Confirma</string>
     <string name="cancelar_compra_message">Você confirma o cancelamento desta compra?</string>
     <string name="cancelar_compra">Cancelar Compra</string>
+
+    //Runtime Permissions
+    <string name="permission_internet">Para continuar, autorize o acesso a Internet.</string>
 
 </resources>

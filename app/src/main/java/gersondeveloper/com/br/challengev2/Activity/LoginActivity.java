@@ -34,10 +34,12 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton, registerButton;
     private ProgressBar progressbar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         initializeComponents();
 
