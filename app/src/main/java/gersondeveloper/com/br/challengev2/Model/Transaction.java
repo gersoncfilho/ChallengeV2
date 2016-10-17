@@ -19,7 +19,6 @@ public class Transaction implements Parcelable {
     public static final String USERNAME = "username";
     public static final String ID_PAYMENT = "id_payment";
 
-
     @DatabaseField(generatedId = true, columnName = ID_TRANSACTION)
     public int idTransaction;
 
@@ -88,6 +87,14 @@ public class Transaction implements Parcelable {
 
     public void setProductValue(Double productValue) {
         this.productValue = productValue;
+    }
+
+    public int getIdTransaction() {
+        return idTransaction;
+    }
+
+    public void setIdTransaction(int idTransaction) {
+        this.idTransaction = idTransaction;
     }
 
     //Constructor

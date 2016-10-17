@@ -2,14 +2,10 @@ package gersondeveloper.com.br.challengev2.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +17,7 @@ import android.widget.TextView;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.PreparedDelete;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 
@@ -29,18 +26,13 @@ import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.Inflater;
 
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Data.DBHelper;
-import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
+import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
 import gersondeveloper.com.br.challengev2.Model.Payment;
-import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
@@ -145,15 +137,31 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             int statusCode = response.code();
             String responseUrl = response.raw().networkResponse().toString();
             Map<String, List<String>> id = getQueryParams(responseUrl);
-            String idPayment = id.get("idPayment").toString().replace("}","");
+            String idPayment = id.get("idPayment").toString().replace("}","").replace("[","").replace("]","");
 
             Log.d("onResponse", "idPayment: " + idPayment);
 
             try {
                 transactionDAO = getHelper().getTransactionDAO();
+
+                //debug//
+                final List<Transaction> transactions = transactionDAO.queryForAll();
+                Log.d("idPayment", idPayment);
+
+                QueryBuilder<Transaction, Integer> queryBuilder = transactionDAO.queryBuilder();
+                queryBuilder.selectColumns("id_Transaction").where().eq("ID_PAYMENT", idPayment);
+                PreparedQuery<Transaction> preparedQuery = queryBuilder.prepare();
+                List<Transaction> transactionToDelete = transactionDAO.query(preparedQuery);
                 DeleteBuilder<Transaction, Integer> deleteBuilder = transactionDAO.deleteBuilder();
-                deleteBuilder.where().eq("ID_PAYMENT",idPayment);
-                deleteBuilder.delete();
+                deleteBuilder.where().eq("ID_TRANSACTION",transactionToDelete.get(0).getIdTransaction());
+                PreparedDelete<Transaction> preparedDelete = deleteBuilder.prepare();
+                transactionDAO.delete(preparedDelete);
+
+
+                FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_frame, new FragmentPrincipal(), FragmentPrincipal.FRAG_ID);
+                transaction.commit();
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -1,6 +1,5 @@
 package gersondeveloper.com.br.challengev2.Activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -14,11 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import gersondeveloper.com.br.challengev2.Fragment.FragmentCompras;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
@@ -117,9 +114,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             //debug
-            /*case R.id.action_debug:
+            case R.id.action_debug:
                 Intent intent = new Intent(MainActivity.this, AndroidDatabaseManager.class);
-                startActivity(intent);*/
+                startActivity(intent);
+                return true;
 
              default:
                  return super.onOptionsItemSelected(item);
