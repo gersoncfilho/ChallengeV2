@@ -106,10 +106,21 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new FragmentCompras();
                 //fragment.setArguments(args);
 
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.content_frame, fragment, FragmentCompras.FRAG_ID);
-                transaction.addToBackStack(FragmentCompras.FRAG_ID);
-                transaction.commit();
+                Fragment currentFrag = fragmentManager.findFragmentById(R.id.content_frame);
+                if(currentFrag != null && currentFrag.getClass().equals(fragment.getClass()))
+                {
+                   transaction.addToBackStack(null);
+                }
+                else
+                {
+                    transaction.replace(R.id.content_frame, fragment,FragmentCompras.FRAG_ID).addToBackStack(null).commit();
+                }
+                //transaction.replace(R.id.content_frame, fragment, FragmentCompras.FRAG_ID);
+
+                //transaction.addToBackStack(FragmentCompras.FRAG_ID);
+                //transaction.commit();
 
                 return true;
 
