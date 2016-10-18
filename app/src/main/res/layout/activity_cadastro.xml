@@ -15,31 +15,61 @@
         android:text="Cadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
+        android:id="@+id/cadastro_titulo_textView"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" android:textSize="20sp" />
+        android:layout_centerHorizontal="true" android:textSize="20sp" android:layout_marginBottom="20dp" />
 
-    <EditText
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="27dp"
-        android:id="@+id/editTextUsername" android:hint="username" />
+        android:id="@+id/cadastro_text_input_username" android:layout_marginTop="20dp" >
 
-    <EditText
+    <AutoCompleteTextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/editTextFirstName" android:hint="nome"
-        android:layout_below="@+id/editTextUsername"
-        android:layout_alignParentStart="true" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/editTextUsername"
+        android:hint="username" />
 
-    <EditText
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/cadastro_text_input_name"
+        android:layout_below="@+id/cadastro_text_input_username">
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextFirstName"
+        android:hint="nome"
+        android:layout_alignParentLeft="true"  />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cadastro_text_input_lastname"
+        android:layout_below="@+id/cadastro_text_input_name">
+
+    <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextLastName"
         android:hint="sobrenome"
         android:layout_below="@+id/editTextFirstName"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentLeft="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cadastro_text_input_email"
+        android:layout_below="@+id/cadastro_text_input_lastname">
 
     <EditText
         android:layout_width="match_parent"
@@ -48,7 +78,15 @@
         android:hint="email"
         android:inputType="textEmailAddress"
         android:layout_below="@+id/editTextLastName"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentLeft="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cadastro_text_input_password"
+        android:layout_below="@+id/cadastro_text_input_email">
 
     <EditText
         android:layout_width="match_parent"
@@ -57,7 +95,15 @@
         android:hint="senha"
         android:inputType="textPassword"
         android:layout_below="@+id/editTextEmail"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentLeft="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cadastro_text_input_password_confirm"
+        android:layout_below="@+id/cadastro_text_input_password">
 
     <EditText
         android:layout_width="match_parent"
@@ -66,7 +112,15 @@
         android:hint="confirma senha"
         android:inputType="textPassword"
         android:layout_below="@+id/editTextPassword"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentLeft="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cadastro_text_input_phone"
+        android:layout_below="@+id/cadastro_text_input_password_confirm">
 
     <EditText
         android:layout_width="match_parent"
@@ -74,29 +128,23 @@
         android:id="@+id/editTextPhone"
         android:hint="telefone"
         android:inputType="number"
-        android:layout_below="@+id/editTextPasswordConfirm"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentLeft="true" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPhone"
-        android:layout_alignParentStart="true"
         android:id="@+id/buttonSalvar"
         android:text="Salvar"
-        android:layout_marginTop="15dp"
         android:background="@color/colorPrimary"
-        android:textColor="@color/white" />
+        android:textColor="@color/white" android:layout_alignParentBottom="true" />
 
     <ProgressBar
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="26dp"
-        android:layout_below="@+id/buttonSalvar"
+        android:layout_height="wrap_content" android:layout_centerInParent="true"
         android:id="@+id/cadastro_progress_bar"
-        android:layout_marginTop="20dp"
         android:visibility="gone"
         android:indeterminate="true" />
 

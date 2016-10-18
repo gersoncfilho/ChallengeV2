@@ -20,6 +20,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -133,6 +134,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         RestClient.initialize();
         calendar = Calendar.getInstance();
         sf = new SimpleDateFormat("dd-mm-yyyy");
+
     }
 
     /**
@@ -156,6 +158,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_confirma_compra, container, false);
 
         textViewProductName = (TextView) view.findViewById(R.id.confirmaTextViewProductName);
@@ -286,6 +289,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
             builder.setMessage(R.string.compra_sucesso);
             AlertDialog dialog = builder.create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
             dialog.show();
         }
 
@@ -330,4 +335,5 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             }
         });
     }
+
 }

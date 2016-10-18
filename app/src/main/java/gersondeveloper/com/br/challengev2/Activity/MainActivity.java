@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.WindowManager;
 
 import gersondeveloper.com.br.challengev2.Fragment.FragmentCompras;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentPrincipal;
@@ -155,10 +157,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearBackStack() {
-        FragmentManager fm = this.activity.getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
+        FragmentManager fm = this.getSupportFragmentManager();
+        if(fm.getBackStackEntryCount()>0)
+        {
+            for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                fm.popBackStack();
+            }
         }
+        else
+        {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
     }
 
 
@@ -230,4 +241,6 @@ public class MainActivity extends AppCompatActivity {
             contentFragment = fragment;
         }
     }
+
+
 }

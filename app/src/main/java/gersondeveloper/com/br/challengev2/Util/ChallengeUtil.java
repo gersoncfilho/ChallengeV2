@@ -2,6 +2,7 @@ package gersondeveloper.com.br.challengev2.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -88,19 +89,6 @@ public class ChallengeUtil {
         sharedPreferences.edit().putString(PHONE, user.getPhone()).apply();
     }
 
-/*    public static void saveTransaction(Context context, Payment payment, Sender sender)
-    {
-        Gson gson = new Gson();
-        String objetctJson = gson.toJson(sender);
-
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME,0);
-        sharedPreferences.edit().putString(NAME, payment.getName()).apply();
-        sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
-        sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
-        sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
-        sharedPreferences.edit().putString(SENDER,sender.toString()).apply();
-    }*/
-
     public static void logout(Context context)
     {
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME, context.MODE_PRIVATE);
@@ -128,6 +116,13 @@ public class ChallengeUtil {
 
         return priceFormatted;
     }
+
+   /* public static boolean isNetworkConnected()
+    {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }*/
 
     public static boolean isUserResgistered(Context context)
     {
