@@ -220,11 +220,6 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         {
             if(ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
             {
-
-               //Toast.makeText(activity, R.string.permission_internet, Toast.LENGTH_SHORT).show();
-
-
-
                 Snackbar.make(root, R.string.permission_internet, Snackbar.LENGTH_SHORT)
                         .setAction(R.string.ok, new View.OnClickListener() {
                             @Override

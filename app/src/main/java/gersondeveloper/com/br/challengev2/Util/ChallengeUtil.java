@@ -3,6 +3,7 @@ package gersondeveloper.com.br.challengev2.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -117,12 +118,15 @@ public class ChallengeUtil {
         return priceFormatted;
     }
 
-   /* public static boolean isNetworkConnected()
-    {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null;
-    }*/
+    public static boolean isNetworkAvailable(Context ctx){
+        ConnectivityManager connectivityManager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if(activeNetworkInfo!=null && activeNetworkInfo.isConnected()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public static boolean isUserResgistered(Context context)
     {

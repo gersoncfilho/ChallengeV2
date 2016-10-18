@@ -32,6 +32,7 @@
     <string name="cancela">Cancela</string>
     <string name="fechar">Fechar</string>
     <string name="ok">OK</string>
+    <string name="sem_conexao">Aparelho sem conexão de dados. Favor se conectar para prosseguir.</string>
 
     <!--Menu-->
     <string name="logout">Logout</string>
