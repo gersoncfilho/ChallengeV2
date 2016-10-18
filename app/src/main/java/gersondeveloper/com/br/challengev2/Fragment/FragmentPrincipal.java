@@ -1,13 +1,11 @@
 package gersondeveloper.com.br.challengev2.Fragment;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
@@ -61,6 +61,7 @@ public class FragmentPrincipal extends Fragment {
 
 
         view = inflater.inflate(R.layout.fragment_principal, container, false);
+
 
         viewPager = (ViewPager) view.findViewById(R.id.opcoes_view_pager);
 
@@ -119,6 +120,10 @@ public class FragmentPrincipal extends Fragment {
 
 
         recyclerView.setAdapter(new CardsAdapter(activity, data_cards));
+
+        CirclePageIndicator indicator = (CirclePageIndicator) view.findViewById(R.id.circle_page_indicator);
+        indicator.setViewPager(viewPager);
+
 
         return view;
 
