@@ -2,6 +2,7 @@ package gersondeveloper.com.br.challengev2.Adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -50,6 +51,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     FragmentActivity activity;
     LayoutInflater inflater;
     Boolean registroApagado;
+    View root;
 
     private Dao<Transaction, Integer> transactionDAO;
     private DBHelper dbHelper;
@@ -82,6 +84,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public TransactionAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         this.inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.compras_layout, parent, false);
+        root = view.findViewById(R.id.compras_layout);
 
         TransactionAdapter.MyViewHolder myViewHolder = new TransactionAdapter.MyViewHolder(view);
         return myViewHolder;
@@ -104,15 +107,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         cancelaCompraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                if (ChallengeUtil.isNetworkAvailable(activity.getApplicationContext())){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setPositiveButton(R.string.cancelar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String idPayment = dataSet.get(listPosition).getIdPayment();
-
-                        RestClient.getInstance().deletePayment(idPayment, cancelaTransacao);
-
-
+                    String idPayment = dataSet.get(listPosition).getIdPayment();
+                    RestClient.getInstance().deletePayment(idPayment, cancelaTransacao);
                     }
                 });
 
@@ -126,6 +128,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 builder.setMessage(R.string.cancelar_compra_message);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+                else
+                {
+                    Snackbar.make(root, R.string.sem_conexao, Snackbar.LENGTH_LONG).show();
+                }
             }
         });
     }

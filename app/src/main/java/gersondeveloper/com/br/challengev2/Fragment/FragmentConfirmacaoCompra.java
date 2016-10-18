@@ -14,20 +14,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -169,7 +164,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         buttonCancel = (Button) view.findViewById(R.id.confirmaButtonCancela);
         progressBar = (ProgressBar) view.findViewById(R.id.confirma_progress_bar);
         textViewconfirmaAguarde = (TextView) view.findViewById(R.id.confirma_aguarde_text_view);
-        root = (LinearLayout) view.findViewById(R.id.confirma_main_relative_layout);
+        root = view.findViewById(R.id.confirma_main_relative_layout);
 
         buttonCancel.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
@@ -209,7 +204,15 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
         if(view == buttonSubmit)
         {
-            confirmaCompraWrapper();
+            if(ChallengeUtil.isNetworkAvailable(activity.getApplicationContext()))
+            {
+                confirmaCompraWrapper();
+            }
+            else
+            {
+                Snackbar.make(root,R.string.sem_conexao,Snackbar.LENGTH_LONG).show();
+            }
+
         }
 
     }

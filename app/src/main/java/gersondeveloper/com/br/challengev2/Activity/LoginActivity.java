@@ -3,6 +3,7 @@ package gersondeveloper.com.br.challengev2.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private AutoCompleteTextView passwordEditText;
     private Button loginButton, registerButton;
     private ProgressBar progressbar;
+    View root;
 
 
     @Override
@@ -40,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        root = findViewById(R.id.activity_login_new);
 
         initializeComponents();
 
@@ -62,7 +65,19 @@ public class LoginActivity extends AppCompatActivity {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    attemptLogin();
+                    if (view != null) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+
+                    if(ChallengeUtil.isNetworkAvailable(getApplicationContext()))
+                    {
+                        attemptLogin();
+                    }
+                    else
+                    {
+                        Snackbar.make(root, R.string.sem_conexao, Snackbar.LENGTH_LONG).show();
+                    }
                 }
             });
         }
@@ -104,11 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
-            View view = this.getCurrentFocus();
-            if (view != null) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
+
 
             progressbar.setVisibility(View.VISIBLE);
 
@@ -117,6 +128,8 @@ public class LoginActivity extends AppCompatActivity {
             data.put("password", password);
 
             RestClient.getInstance().getUserLogin(data, loginCallback);
+
+
         }
 
     }
