@@ -1,0 +1,28 @@
+# --table-start--
+dataClass=gersondeveloper.com.br.challengev2.Model.Transaction
+tableName=transaction
+# --table-fields-start--
+# --field-start--
+fieldName=idTransaction
+columnName=id_transaction
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=username
+columnName=username
+# --field-end--
+# --field-start--
+fieldName=productName
+columnName=product_name
+# --field-end--
+# --field-start--
+fieldName=idPayment
+columnName=id_payment
+# --field-end--
+# --field-start--
+fieldName=productValue
+columnName=product_value
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

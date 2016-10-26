@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:layout_marginBottom="5dp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp" android:layout_marginTop="5dp"
+        android:elevation="10dp"
+        android:id="@+id/opcoes_card_cardview" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:id="@+id/opcoesImageView"
+                android:padding="15dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"
+                android:layout_below="@+id/opcoesImageView"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:id="@+id/opcoes_line"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/opcoesProductPrice"
+                android:layout_below="@+id/opcoes_line"
+                android:textSize="22sp"
+                android:textColor="@color/colorAccent" android:layout_marginLeft="10dp" android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/opcoesProductName"
+                android:layout_below="@+id/opcoes_line" android:textSize="20sp"
+                android:layout_alignParentEnd="true" android:textStyle="bold" android:layout_marginRight="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/opcoesProductDescription"
+                android:layout_below="@id/opcoesProductName" android:textSize="16sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
