@@ -4,19 +4,20 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by gerso on 09/10/2016.
  */
 
+@DatabaseTable
 public class Transaction implements Parcelable {
 
     private static final long serialVersionUID = -222864131214757024L;
 
     public static final String ID_TRANSACTION = "id_transaction";
-
     public static final String USERNAME = "username";
-
+    public static final String ID_PAYMENT = "id_payment";
 
     @DatabaseField(generatedId = true, columnName = ID_TRANSACTION)
     public int idTransaction;
@@ -30,8 +31,8 @@ public class Transaction implements Parcelable {
     @DatabaseField(columnName = "product_name")
     public String productName;
 
-    @DatabaseField(columnName = "id_payment")
-    public int idPayment;
+    @DatabaseField(columnName = ID_PAYMENT)
+    public String idPayment;
 
     @DatabaseField(columnName = "product_value")
     public Double productValue;
@@ -72,11 +73,11 @@ public class Transaction implements Parcelable {
         this.productName = productName;
     }
 
-    public int getIdPayment() {
+    public String getIdPayment() {
         return idPayment;
     }
 
-    public void setIdPayment(int idPayment) {
+    public void setIdPayment(String idPayment) {
         this.idPayment = idPayment;
     }
 
@@ -88,13 +89,21 @@ public class Transaction implements Parcelable {
         this.productValue = productValue;
     }
 
+    public int getIdTransaction() {
+        return idTransaction;
+    }
+
+    public void setIdTransaction(int idTransaction) {
+        this.idTransaction = idTransaction;
+    }
+
     //Constructor
     public Transaction()
     {
 
     }
 
-    public Transaction(String username, String email, String productName, int idPayment, double productValue, int productImage)
+    public Transaction(String username, String email, String productName, String idPayment, double productValue, int productImage)
     {
         this.username = username;
         this.email = email;
@@ -109,7 +118,7 @@ public class Transaction implements Parcelable {
         parcel.writeString(username);
         parcel.writeString(email);
         parcel.writeString(productName);
-        parcel.writeInt(idPayment);
+        parcel.writeString(idPayment);
         parcel.writeDouble(productValue);
         parcel.writeInt(productImage);
     }
@@ -120,7 +129,7 @@ public class Transaction implements Parcelable {
         this.username = in.readString();
         this.email = in.readString();
         this.productName = in.readString();
-        this.idPayment = in.readInt();
+        this.idPayment = in.readString();
         this.productValue = in.readDouble();
         this.productImage = in.readInt();
     }

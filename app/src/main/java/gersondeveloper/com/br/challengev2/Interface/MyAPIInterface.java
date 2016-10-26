@@ -53,8 +53,8 @@ public interface MyAPIInterface {
     Call<Payment> postPayment(@Body Payment payment);
 
     //delete payment
-    @DELETE("api/payment/{paymentId}")
-    Call<Payment> deletePayment(@Path("paymentId")int paymentId);
+    @DELETE("api/payments/reference")
+    Call<Payment> deletePayment(@Query("idPayment")String idPayment);
 
 
 }

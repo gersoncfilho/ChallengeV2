@@ -3,6 +3,7 @@ package gersondeveloper.com.br.challengev2.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,7 +13,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.User;
@@ -39,13 +42,14 @@ public class CadastroActivity extends AppCompatActivity {
     private boolean cancel;
     private ProgressBar progressBar;
     private ProgressDialog progressDialog;
+    View root;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        //Setup Cadastro form
+        root = (RelativeLayout) findViewById(R.id.activity_cadastro);
 
         initializeComponents();
 
@@ -101,8 +105,6 @@ public class CadastroActivity extends AppCompatActivity {
                 }
                 else
                 {
-
-
                     User user = new User();
                     user.setUsername(username.getText().toString());
                     user.setFirstName(firstName.getText().toString());
@@ -113,7 +115,21 @@ public class CadastroActivity extends AppCompatActivity {
 
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     progressBar.setVisibility(View.VISIBLE);
-                    RestClient.getInstance().registerUser(user, registerCallback);
+                    if(ChallengeUtil.isNetworkAvailable(getApplicationContext()))
+                    {
+                        RestClient.getInstance().registerUser(user, registerCallback);
+                    }
+                    else
+                    {
+                        Snackbar.make(root, R.string.sem_conexao, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+
 
 
                 }

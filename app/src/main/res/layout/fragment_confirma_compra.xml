@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent" android:layout_margin="10dp"
-    android:weightSum="1">
+    android:id="@+id/confirma_main_relative_layout">
 
     <TextView
         android:layout_width="wrap_content"
@@ -145,16 +145,26 @@
                 android:textColor="@color/white"
                 android:layout_marginTop="10dp" android:layout_weight="1" />
         </TableRow>
-            <ProgressBar
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonSalvar"
-                android:id="@+id/confirma_progress_bar" android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:visibility="gone"
-                android:indeterminate="true" />
     </TableLayout>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonSalvar"
+        android:id="@+id/confirma_progress_bar"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:indeterminate="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aguarde"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:id="@+id/confirma_aguarde_text_view" />
 
 
 </LinearLayout>
