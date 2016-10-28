@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/compras_cardView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:id="@+id/compras_product_image_view"
+                android:layout_margin="5dp"
+                android:scaleType="centerInside" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/compras_product_image_view"
+                android:stretchColumns="*"
+                android:shrinkColumns="*">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:text="# Pgto: "
+                        android:layout_weight="4"
+                        android:layout_width="0dp" android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/compras_idPayment_textView"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="4"
+                        android:textColor="@color/colorAccent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Valor: "
+                        android:layout_weight="4"
+                        android:layout_width="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/compras_product_value_TextView"
+                        android:layout_weight="4"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:text="Nome: "
+                        android:layout_weight="4"
+                        android:layout_width="0dp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/compras_product_name_textView"
+                        android:layout_weight="4"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                </TableRow>
+
+                <TableRow>
+
+                    <Button
+                        android:text="@string/cancelar_compra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/compras_cancela_compra_button"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:backgroundTint="@color/danger" />
+
+
+
+                </TableRow>
+
+
+
+
+            </TableLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
