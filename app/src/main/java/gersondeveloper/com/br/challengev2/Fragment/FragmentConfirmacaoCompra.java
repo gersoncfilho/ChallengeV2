@@ -1,12 +1,18 @@
 package gersondeveloper.com.br.challengev2.Fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,10 +27,13 @@ import android.widget.TextView;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
-import gersondeveloper.com.br.challengev2.Data.DatabaseHelper;
+import gersondeveloper.com.br.challengev2.Data.DBHelper;
 import gersondeveloper.com.br.challengev2.Model.Payment;
-import gersondeveloper.com.br.challengev2.Model.Sender;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
@@ -32,12 +41,6 @@ import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by gerso on 09/10/2016.
@@ -47,8 +50,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
     public static final String TAG = FragmentConfirmacaoCompra.class.getName();
     public static final String FRAG_ID = "fragment_confirmacao_compra";
-    private DatabaseHelper databaseHelper;
-    private TextView textViewProductName, textViewIdPayment, textViewProductValue;
+    private TextView textViewProductName, textViewIdPayment, textViewProductValue, textViewconfirmaAguarde;
     private Button buttonCancel, buttonSubmit;
     private ImageView imageViewProduct;
     Activity activity;
@@ -58,6 +60,50 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     private String date;
     SimpleDateFormat sf;
     ProgressBar progressBar;
+    View root;
+
+    DBHelper dbHelper;
+
+    private static final int REQUEST_EXTERNAL_STORAGE = 0;
+
+    /**
+     * Callback for the result from requesting permissions. This method
+     * is invoked for every call on {@link #requestPermissions(String[], int)}.
+     * <p>
+     * <strong>Note:</strong> It is possible that the permissions request interaction
+     * with the user is interrupted. In this case you will receive empty permissions
+     * and results arrays which should be treated as a cancellation.
+     * </p>
+     *
+     * @param requestCode  The request code passed in {@link #requestPermissions(String[], int)}.
+     * @param permissions  The requested permissions. Never null.
+     * @param grantResults The grant results for the corresponding permissions
+     *                     which is either {@link PackageManager#PERMISSION_GRANTED}
+     *                     or {@link PackageManager#PERMISSION_DENIED}. Never null.
+     * @see #requestPermissions(String[], int)
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode)
+        {
+            case REQUEST_EXTERNAL_STORAGE:
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Log.d(TAG, "permission granted");
+                    //confirmaCompra();
+                }
+                else
+                {
+                    Fragment fragment = new FragmentPrincipal();
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.content_frame, fragment);
+                    clearBackStack();
+                    fragmentTransaction.commit();
+                }
+                return;
+        }
+    }
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -107,6 +153,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_confirma_compra, container, false);
 
         textViewProductName = (TextView) view.findViewById(R.id.confirmaTextViewProductName);
@@ -116,6 +163,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         buttonSubmit = (Button) view.findViewById(R.id.confirmaButtonConfirma);
         buttonCancel = (Button) view.findViewById(R.id.confirmaButtonCancela);
         progressBar = (ProgressBar) view.findViewById(R.id.confirma_progress_bar);
+        textViewconfirmaAguarde = (TextView) view.findViewById(R.id.confirma_aguarde_text_view);
+        root = view.findViewById(R.id.confirma_main_relative_layout);
 
         buttonCancel.setOnClickListener(this);
         buttonSubmit.setOnClickListener(this);
@@ -131,21 +180,18 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             transaction.setEmail(user.getEmail());
             textViewProductName.setText(transaction.getProductName());
             textViewIdPayment.setText(String.valueOf(transaction.getIdPayment()));
-            textViewProductValue.setText(String.valueOf(transaction.getProductValue()));
+            textViewProductValue.setText(ChallengeUtil.formatPrice(transaction.getProductValue()));
             imageViewProduct.setImageResource(transaction.getProdutImage());
         }
         
         return view;
     }
 
-    //Initialize DatabaseHelper
-    private DatabaseHelper getDatabaseHelper()
-    {
-        if(databaseHelper == null)
-        {
-            databaseHelper = OpenHelperManager.getHelper(activity, DatabaseHelper.class);
+    private DBHelper getHelper() {
+        if (dbHelper == null) {
+            dbHelper = OpenHelperManager.getHelper(activity.getApplicationContext(),DBHelper.class);
         }
-        return databaseHelper;
+        return dbHelper;
     }
 
     @Override
@@ -158,23 +204,62 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
         if(view == buttonSubmit)
         {
-            progressBar.setVisibility(View.VISIBLE);
-            //grava dados o banco para futuro cancelamento de compra se necessario
-            try {
-                final Dao<Transaction, Integer> transactionDao = getDatabaseHelper().getTransactionDAO();
-                transactionDao.create(transaction);
-                Log.d(TAG, "Registro salvo com sucesso!");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            if(ChallengeUtil.isNetworkAvailable(activity.getApplicationContext()))
+            {
+                confirmaCompraWrapper();
+            }
+            else
+            {
+                Snackbar.make(root,R.string.sem_conexao,Snackbar.LENGTH_LONG).show();
             }
 
-            //envia transacao para o webservice
-
-            Payment payment = Payment.Create(transactionSender, transaction, calendar, sf);
-
-            RestClient.getInstance().registerPayment(payment, registerPayment);
         }
 
+    }
+
+    private void confirmaCompraWrapper()
+    {
+        if(ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            {
+                Snackbar.make(root, R.string.permission_internet, Snackbar.LENGTH_SHORT)
+                        .setAction(R.string.ok, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
+                            }
+                        }).show();
+
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE);
+
+            }
+        }
+        else
+        {
+           confirmaCompra();
+        }
+    }
+
+    private void confirmaCompra()
+    {
+        progressBar.setVisibility(View.VISIBLE);
+        textViewconfirmaAguarde.setVisibility(View.VISIBLE);
+        //grava dados o banco para futuro cancelamento de compra se necessario
+        try
+        {
+            final Dao<Transaction, Integer> transactionDAO = getHelper().getTransactionDAO();
+            transactionDAO.create(transaction);
+
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        //envia transacao para o webservice
+        Payment payment = Payment.Create(transactionSender, transaction, calendar, sf);
+        RestClient.getInstance().registerPayment(payment, registerPayment);
     }
 
     private Callback<Payment> registerPayment = new Callback<Payment>() {
@@ -183,6 +268,7 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             Log.d(TAG, "Successful response.");
             Log.d(TAG, "Response code: " + String.valueOf(response.code()));
             progressBar.setVisibility(View.GONE);
+            textViewconfirmaAguarde.setVisibility(View.GONE);
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setPositiveButton(R.string.fechar, new DialogInterface.OnClickListener() {
                 @Override
@@ -201,6 +287,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
             builder.setMessage(R.string.compra_sucesso);
             AlertDialog dialog = builder.create();
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
             dialog.show();
         }
 
@@ -220,18 +308,13 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
         }
     }
 
-    /**
-     * Called when the fragment is no longer in use.  This is called
-     * after {@link #onStop()} and before {@link #onDetach()}.
-     */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //Release helper when finish
-        if(databaseHelper != null)
+        if(dbHelper != null)
         {
             OpenHelperManager.releaseHelper();
-            databaseHelper = null;
+            dbHelper = null;
         }
     }
 
@@ -250,4 +333,5 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
             }
         });
     }
+
 }

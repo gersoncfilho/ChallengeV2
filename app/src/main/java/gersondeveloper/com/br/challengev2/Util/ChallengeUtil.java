@@ -2,6 +2,8 @@ package gersondeveloper.com.br.challengev2.Util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -13,8 +15,11 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,17 +90,14 @@ public class ChallengeUtil {
         sharedPreferences.edit().putString(PHONE, user.getPhone()).apply();
     }
 
-    public static void saveTransaction(Context context, Payment payment, Sender sender)
+    public static void logout(Context context)
     {
-        Gson gson = new Gson();
-        String objetctJson = gson.toJson(sender);
-
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME,0);
-        sharedPreferences.edit().putString(NAME, payment.getName()).apply();
-        sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
-        sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
-        sharedPreferences.edit().putString(DESCRIPTION, payment.getDescription()).apply();
-        sharedPreferences.edit().putString(SENDER,sender.toString()).apply();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREFERENCE_NAME, context.MODE_PRIVATE);
+        sharedPreferences.edit().remove(USERNAME).apply();
+        sharedPreferences.edit().remove(FIRST_NAME).apply();
+        sharedPreferences.edit().remove(LAST_NAME).apply();
+        sharedPreferences.edit().remove(EMAIL).apply();
+        sharedPreferences.edit().remove(PHONE).apply();
     }
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", Pattern.CASE_INSENSITIVE);
@@ -104,6 +106,26 @@ public class ChallengeUtil {
     {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
+    }
+
+    public static String formatPrice(Double price)
+    {
+        Locale locale = new Locale("pt","BR");
+        Currency currency = Currency.getInstance(locale);
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+        String priceFormatted = currencyFormatter.format(price);
+
+        return priceFormatted;
+    }
+
+    public static boolean isNetworkAvailable(Context ctx){
+        ConnectivityManager connectivityManager = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if(activeNetworkInfo!=null && activeNetworkInfo.isConnected()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public static boolean isUserResgistered(Context context)

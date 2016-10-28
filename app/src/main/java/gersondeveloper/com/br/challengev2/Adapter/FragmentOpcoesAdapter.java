@@ -15,11 +15,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import gersondeveloper.com.br.challengev2.Fragment.FragmentOpcoes;
 import gersondeveloper.com.br.challengev2.Fragment.FragmentProductDetail;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.R;
+import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
 
 /**
  * Created by gerso on 10/10/2016.
@@ -32,6 +34,7 @@ public class FragmentOpcoesAdapter extends RecyclerView.Adapter<FragmentOpcoesAd
     LayoutInflater inflater;
     CardView cardView;
     List<Product> products;
+    Locale locale = new Locale("pt","BR");
 
 
 
@@ -79,7 +82,7 @@ public class FragmentOpcoesAdapter extends RecyclerView.Adapter<FragmentOpcoesAd
         CardView cardView = holder.cardview;
 
         textViewName.setText(dataSet.get(position).getName());
-        textViewPrice.setText(String.valueOf(dataSet.get(position).getProductValue()));
+        textViewPrice.setText(ChallengeUtil.formatPrice(dataSet.get(position).getProductValue()));
         textViewDescription.setText(dataSet.get(position).getDescription());
         imageViewProduct.setImageResource(dataSet.get(position).getProductImage());
 

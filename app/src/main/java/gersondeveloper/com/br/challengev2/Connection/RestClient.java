@@ -82,7 +82,7 @@ public class RestClient {
         call.enqueue(callback);
     }
 
-    public void deletePayment(Integer paymentId, Callback<Payment> callback)
+    public void deletePayment(String paymentId, Callback<Payment> callback)
     {
         Call<Payment>call = apiService.deletePayment(paymentId);
         call.enqueue(callback);

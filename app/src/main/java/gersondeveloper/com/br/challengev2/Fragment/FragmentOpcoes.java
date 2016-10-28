@@ -24,7 +24,7 @@ import gersondeveloper.com.br.challengev2.Util.MySeedData;
  * Created by gerso on 10/10/2016.
  */
 
-public class FragmentOpcoes extends Fragment implements View.OnClickListener {
+public class FragmentOpcoes extends Fragment{
 
     public static final String FRAG_ID = "fragment_opcoes";
     public static final String TAG = FragmentOpcoes.class.getName();
@@ -85,11 +85,6 @@ public class FragmentOpcoes extends Fragment implements View.OnClickListener {
         recyclerView.setAdapter(new FragmentOpcoesAdapter(activity, data_cards));
 
         return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 
     private void createDataCards(String tipoProduto)
