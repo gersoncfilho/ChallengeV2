@@ -12,12 +12,16 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
@@ -29,28 +33,25 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getName();
-
-    private AutoCompleteTextView usernameEditText;
-    private AutoCompleteTextView passwordEditText;
     private Button loginButton, registerButton;
-    private ProgressBar progressbar;
+
     View root;
 
+    @BindView(R.id.login_edit_text_username)
+    AutoCompleteTextView usernameEditText;
+
+    @BindView(R.id.login_edit_text_password)
+    AutoCompleteTextView passwordEditText;
+
+    @BindView(R.id.login_progress)
+    ProgressBar progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ButterKnife.bind(this);
         root = findViewById(R.id.activity_login_new);
-
-        initializeComponents();
-
-        //Logout da aplicação, intent vindo da MainActivity
-        if(getIntent().getBooleanExtra("logout",false))
-        {
-            finish();
-        }
 
         //Verifica se usuário já existe, se existir vai direto para a tela principal, caso contrário é direcionado a página de login
         if(ChallengeUtil.isUserResgistered(LoginActivity.this))
@@ -59,36 +60,29 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
 
         }
+    }
+
+    @OnClick(R.id.login_button)
+    public void login()
+    {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
+
+        if(ChallengeUtil.isNetworkAvailable(getApplicationContext()))
+        {
+            attemptLogin();
+        }
         else
         {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-            loginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (view != null) {
-                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    }
-
-                    if(ChallengeUtil.isNetworkAvailable(getApplicationContext()))
-                    {
-                        attemptLogin();
-                    }
-                    else
-                    {
-                        Snackbar.make(root, R.string.sem_conexao, Snackbar.LENGTH_LONG).show();
-                    }
-                }
-            });
+            Snackbar.make(root, R.string.sem_conexao, Snackbar.LENGTH_LONG).show();
         }
+    }
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
-                startActivity(intent);
-            }
-        });
+    @OnClick(R.id.register_button)
+    public void register()
+    {
+        Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+        startActivity(intent);
     }
 
     private void attemptLogin()
@@ -134,14 +128,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void initializeComponents()
-    {
-        usernameEditText = (AutoCompleteTextView) findViewById(R.id.login_edit_text_username);
-        passwordEditText = (AutoCompleteTextView) findViewById(R.id.login_edit_text_password);
-        loginButton = (Button) findViewById(R.id.login_button);
-        registerButton = (Button) findViewById(R.id.register_button);
-        progressbar = (ProgressBar) findViewById(R.id.login_progress);
-    }
+
 
     private Callback<User> loginCallback = new Callback<User>() {
         @Override

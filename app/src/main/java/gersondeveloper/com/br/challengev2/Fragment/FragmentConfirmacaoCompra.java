@@ -27,10 +27,14 @@ import android.widget.TextView;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 
+import org.w3c.dom.Text;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Data.DBHelper;
 import gersondeveloper.com.br.challengev2.Model.Payment;
@@ -50,19 +54,40 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
 
     public static final String TAG = FragmentConfirmacaoCompra.class.getName();
     public static final String FRAG_ID = "fragment_confirmacao_compra";
-    private TextView textViewProductName, textViewIdPayment, textViewProductValue, textViewconfirmaAguarde;
-    private Button buttonCancel, buttonSubmit;
-    private ImageView imageViewProduct;
     Activity activity;
     Transaction transaction;
     private static final String transactionSender = "Challenge Games";
     Calendar calendar;
     private String date;
     SimpleDateFormat sf;
-    ProgressBar progressBar;
     View root;
 
     DBHelper dbHelper;
+
+    @BindView(R.id.confirmaTextViewProductName)
+    TextView textViewProductName;
+
+    @BindView(R.id.confirmaTextViewIdPayment)
+    TextView textViewIdPayment;
+
+    @BindView(R.id.confirmaTextViewProductValue)
+    TextView textViewProductValue;
+
+    @BindView(R.id.confirma_aguarde_text_view)
+    TextView textViewconfirmaAguarde;
+
+    @BindView(R.id.confirmaButtonConfirma)
+    Button buttonSubmit;
+
+    @BindView(R.id.confirmaButtonCancela)
+    Button buttonCancel;
+
+    @BindView(R.id.confirmacaoImageViewProduto)
+    ImageView imageViewProduct;
+
+    @BindView(R.id.confirma_progress_bar)
+    ProgressBar progressBar;
+
 
     private static final int REQUEST_EXTERNAL_STORAGE = 0;
 
@@ -155,15 +180,8 @@ public class FragmentConfirmacaoCompra extends Fragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_confirma_compra, container, false);
+        ButterKnife.bind(this, view);
 
-        textViewProductName = (TextView) view.findViewById(R.id.confirmaTextViewProductName);
-        textViewIdPayment = (TextView) view.findViewById(R.id.confirmaTextViewIdPayment);
-        textViewProductValue = (TextView) view.findViewById(R.id.confirmaTextViewProductValue);
-        imageViewProduct = (ImageView) view.findViewById(R.id.confirmacaoImageViewProduto);
-        buttonSubmit = (Button) view.findViewById(R.id.confirmaButtonConfirma);
-        buttonCancel = (Button) view.findViewById(R.id.confirmaButtonCancela);
-        progressBar = (ProgressBar) view.findViewById(R.id.confirma_progress_bar);
-        textViewconfirmaAguarde = (TextView) view.findViewById(R.id.confirma_aguarde_text_view);
         root = view.findViewById(R.id.confirma_main_relative_layout);
 
         buttonCancel.setOnClickListener(this);

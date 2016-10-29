@@ -24,6 +24,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import gersondeveloper.com.br.challengev2.Adapter.ComprasAdapter;
 import gersondeveloper.com.br.challengev2.Adapter.TransactionAdapter;
 import gersondeveloper.com.br.challengev2.Data.DBHelper;
@@ -40,15 +43,13 @@ public class FragmentCompras extends Fragment {
 
     public static final String FRAG_ID = "fragment_opcoes";
     public static final String TAG = FragmentOpcoes.class.getName();
-    RecyclerView recyclerView;
+
     GridLayoutManager gridLayoutManager;
     LinearLayoutManager linearLayoutManage;
     FragmentActivity activity;
 
-
-    private TextView idPaymentTextView, productValueTextView, productNameTextView;
-    private ImageView productImageView;
-    private Button cancelaTransactionButton;
+    @BindView(R.id.rv_compras)
+    RecyclerView recyclerView;
 
     private Dao<Transaction, Integer> transactionDAO;
     private DBHelper dbHelper;
@@ -67,8 +68,7 @@ public class FragmentCompras extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compras, container,false);
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_compras);
+        ButterKnife.bind(this, view);
         gridLayoutManager = new GridLayoutManager(activity,1);
         linearLayoutManage = new LinearLayoutManager(activity, 1, false);
         recyclerView.setLayoutManager(linearLayoutManage);

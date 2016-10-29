@@ -58,10 +58,6 @@ public class MainActivity extends AppCompatActivity {
             toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         }
 
-        /*getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
-
-
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if(savedInstanceState != null)
@@ -117,10 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     transaction.replace(R.id.content_frame, fragment,FragmentCompras.FRAG_ID).addToBackStack(null).commit();
                 }
-                //transaction.replace(R.id.content_frame, fragment, FragmentCompras.FRAG_ID);
-
-                //transaction.addToBackStack(FragmentCompras.FRAG_ID);
-                //transaction.commit();
 
                 return true;
 
