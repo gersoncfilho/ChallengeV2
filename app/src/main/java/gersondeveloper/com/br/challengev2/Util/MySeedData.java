@@ -14,7 +14,7 @@ public class MySeedData {
 
     public static double[] productValueArray = {1400.00, 1200.00, 900.00};
 
-    public static String[] productDescriptionArray = {"PS4 Versão 20 aniversário. Cor Branca, 1Tb, 2 controles, fones Bluetooth. Acompanha 3 jogos.","Xbox One 500Gb, sem Kinect, 1 controle, acompanha 6 jogos na memória e duas mídias físicas. ","Joystick Descriptiojn"};
+    public static String[] productDescriptionArray = {"PS4 Versão 20th. Cor Branca, 1Tb, 2 controles, Bluetooth. Acompanha 3 jogos.","Xbox One 500Gb, sem Kinect, 1 controle, acompanha 6 jogos na memória e duas mídias físicas. ","Joystick Descriptiojn"};
 
     public static Integer[] drawableArray = {
             R.drawable.opcoes_1_new, R.drawable.opcoes_1_xbox, R.drawable.opcoes_1_acessorios

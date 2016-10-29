@@ -29,7 +29,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="false"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp" android:background="@drawable/gray_gradient" />
+                android:layout_marginTop="5dp"
+                android:background="@drawable/gray_gradient" />
 
             <TextView
                 android:text="TextView"
