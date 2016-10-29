@@ -19,6 +19,8 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import gersondeveloper.com.br.challengev2.Adapter.CardsAdapter;
 import gersondeveloper.com.br.challengev2.Adapter.OpcoesAdapter;
 import gersondeveloper.com.br.challengev2.Model.Product;
@@ -37,38 +39,34 @@ public class FragmentPrincipal extends Fragment {
     public static final String FRAG_ID = "fragment_principal";
 
     ArrayList<Product> data, data_cards;
-    ViewPager viewPager;
+
     FragmentActivity activity;
-    RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
     LinearLayoutManager linearLayoutManager;
     View view;
     Toolbar toolbar;
 
+    @BindView(R.id.opcoes_view_pager)
+    ViewPager viewPager;
+
+    @BindView(R.id.rv_cards)
+    RecyclerView recyclerView;
+
+    @BindView(R.id.circle_page_indicator)
+    CirclePageIndicator indicator;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-
-
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, ("FragmentPincipal_onCreateView"));
-
-
         view = inflater.inflate(R.layout.fragment_principal, container, false);
-
-
-        viewPager = (ViewPager) view.findViewById(R.id.opcoes_view_pager);
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_cards);
-
-
-
+        ButterKnife.bind(this, view);
 
         //if orientation landscape, configures gridlayoutmanager to only one card per column, otherwise two
         if (getActivity().getResources().getConfiguration().smallestScreenWidthDp <= 320 || getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -121,7 +119,6 @@ public class FragmentPrincipal extends Fragment {
 
         recyclerView.setAdapter(new CardsAdapter(activity, data_cards));
 
-        CirclePageIndicator indicator = (CirclePageIndicator) view.findViewById(R.id.circle_page_indicator);
         indicator.setViewPager(viewPager);
 
 

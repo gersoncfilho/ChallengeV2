@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import gersondeveloper.com.br.challengev2.Model.Product;
 import gersondeveloper.com.br.challengev2.Model.Transaction;
 import gersondeveloper.com.br.challengev2.Model.User;
@@ -31,12 +33,27 @@ public class FragmentProductDetail extends Fragment implements View.OnClickListe
     private static final String TAG = FragmentProductDetail.class.getName();
     Product product;
     FragmentActivity activity;
-    TextView textViewProductName, textViewProductValue, textViewProductDescription;
-    ImageView productImageView;
-    Button buttonComprar;
+
     Transaction transaction;
     User user;
     Random random = new Random();
+
+    @BindView(R.id.detailTextViewName)
+    TextView textViewProductName;
+
+    @BindView(R.id.detailTextViewPrice)
+    TextView textViewProductValue;
+
+    @BindView(R.id.detailTextViewDescription)
+    TextView textViewProductDescription;
+
+    @BindView(R.id.detailImageProduct)
+    ImageView productImageView;
+
+    @BindView(R.id.detailButtonComprar)
+    Button buttonComprar;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,12 +65,7 @@ public class FragmentProductDetail extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
-
-        textViewProductName = (TextView) view.findViewById(R.id.detailTextViewName);
-        textViewProductValue = (TextView) view.findViewById(R.id.detailTextViewPrice);
-        textViewProductDescription = (TextView) view.findViewById(R.id.detailTextViewDescription);
-        productImageView = (ImageView) view.findViewById(R.id.detailImageProduct);
-        buttonComprar = (Button) view.findViewById(R.id.detailButtonComprar);
+        ButterKnife.bind(this, view);
 
         buttonComprar.setOnClickListener(this);
 

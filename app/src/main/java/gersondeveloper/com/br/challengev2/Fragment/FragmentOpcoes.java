@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import gersondeveloper.com.br.challengev2.Adapter.CardsAdapter;
 import gersondeveloper.com.br.challengev2.Adapter.FragmentOpcoesAdapter;
 import gersondeveloper.com.br.challengev2.Model.Product;
@@ -28,11 +30,14 @@ public class FragmentOpcoes extends Fragment{
 
     public static final String FRAG_ID = "fragment_opcoes";
     public static final String TAG = FragmentOpcoes.class.getName();
-    RecyclerView recyclerView;
+
     GridLayoutManager gridLayoutManager;
     FragmentActivity activity;
     ArrayList<Product> data_cards;
     String tipoProduto;
+
+    @BindView(R.id.opcoes_rv_cards)
+    RecyclerView recyclerView;
 
 
     /**
@@ -70,7 +75,8 @@ public class FragmentOpcoes extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_opcoes, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.opcoes_rv_cards);
+        ButterKnife.bind(this, view);
+
         gridLayoutManager = new GridLayoutManager(activity,1);
         recyclerView.setLayoutManager(gridLayoutManager);
 

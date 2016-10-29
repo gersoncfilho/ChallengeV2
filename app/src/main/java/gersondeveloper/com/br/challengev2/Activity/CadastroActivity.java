@@ -17,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
@@ -30,112 +33,40 @@ public class CadastroActivity extends AppCompatActivity {
 
     public static final String TAG = CadastroActivity.class.getName();
 
-    private EditText username;
-    private EditText firstName;
-    private EditText lastName;
-    private EditText password;
-    private EditText confirmPassword;
-    private EditText phone;
-    private EditText email;
-    private Button btnRegistrar;
     private View focusView;
     private boolean cancel;
-    private ProgressBar progressBar;
-    private ProgressDialog progressDialog;
     View root;
+
+    @BindView(R.id.cadastro_progress_bar)
+    ProgressBar progressBar;
+
+    @BindView(R.id.editTextUsername)
+    EditText username;
+
+    @BindView(R.id.editTextFirstName)
+    EditText firstName;
+
+    @BindView(R.id.editTextLastName)
+    EditText lastName;
+
+    @BindView(R.id.editTextPassword)
+    EditText password;
+
+    @BindView(R.id.editTextPasswordConfirm)
+    EditText confirmPassword;
+
+    @BindView(R.id.editTextPhone)
+    EditText phone;
+
+    @BindView(R.id.editTextEmail)
+    EditText email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
-
+        ButterKnife.bind(this);
         root = (RelativeLayout) findViewById(R.id.activity_cadastro);
-
-        initializeComponents();
-
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(TextUtils.isEmpty(username.getText().toString()))
-                {
-                    username.setError(getString(R.string.error_field_required));
-                    focusView = username;
-                    cancel = true;
-                }
-                else if(TextUtils.isEmpty(firstName.getText().toString()))
-                {
-                    firstName.setError(getString(R.string.error_field_required));
-                    focusView = firstName;
-                    cancel = true;
-                }
-                else if(TextUtils.isEmpty(lastName.getText().toString()))
-                {
-                    lastName.setError(getString(R.string.error_field_required));
-                    focusView = lastName;
-                    cancel = true;
-                }
-                else if(TextUtils.isEmpty(email.getText().toString()))
-                {
-                    email.setError(getString(R.string.error_field_required));
-                    focusView = email;
-                    cancel = true;
-                }
-                else if(!ChallengeUtil.emailValidator(email.getText().toString()))
-                {
-                    email.setError(getString(R.string.error_invalid_email));
-                    focusView = email;
-                    cancel = true;
-                }
-                else if(!password.getText().toString().equals(confirmPassword.getText().toString()))
-                {
-                    email.setError(getString(R.string.confirmacao_email));
-                    focusView = email;
-                    cancel = true;
-
-                }
-                else if(TextUtils.isEmpty(phone.getText().toString()))
-                {
-                    phone.setError(getString(R.string.error_field_required));
-                    focusView = phone;
-                    cancel = true;
-                }
-                if(cancel)
-                {
-                    focusView.requestFocus();
-                }
-                else
-                {
-                    User user = new User();
-                    user.setUsername(username.getText().toString());
-                    user.setFirstName(firstName.getText().toString());
-                    user.setLastName(lastName.getText().toString());
-                    user.setEmail(email.getText().toString());
-                    user.setPassword(password.getText().toString());
-                    user.setPhone(phone.getText().toString());
-
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-                    progressBar.setVisibility(View.VISIBLE);
-                    if(ChallengeUtil.isNetworkAvailable(getApplicationContext()))
-                    {
-                        RestClient.getInstance().registerUser(user, registerCallback);
-                    }
-                    else
-                    {
-                        Snackbar.make(root, R.string.sem_conexao, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
-
-
-                }
-            }
-        });
-
     }
 
 
@@ -154,18 +85,82 @@ public class CadastroActivity extends AppCompatActivity {
         }
     };
 
-
-    private void initializeComponents()
+    @OnClick(R.id.buttonSalvar)
+    public void registrar()
     {
-        this.progressBar = (ProgressBar) findViewById(R.id.cadastro_progress_bar);
-        this.username =(EditText) findViewById(R.id.editTextUsername);
-        this.firstName = (EditText) findViewById(R.id.editTextFirstName);
-        this.lastName = (EditText) findViewById(R.id.editTextLastName);
-        this.password = (EditText) findViewById(R.id.editTextPassword);
-        this.confirmPassword = (EditText) findViewById(R.id.editTextPasswordConfirm);
-        this.phone = (EditText) findViewById(R.id.editTextPhone);
-        this.email = (EditText) findViewById(R.id.editTextEmail);
-        this.btnRegistrar = (Button) findViewById(R.id.buttonSalvar);
-        progressBar = (ProgressBar) findViewById(R.id.cadastro_progress_bar);
+        if(TextUtils.isEmpty(username.getText().toString()))
+        {
+            username.setError(getString(R.string.error_field_required));
+            focusView = username;
+            cancel = true;
+        }
+        else if(TextUtils.isEmpty(firstName.getText().toString()))
+        {
+            firstName.setError(getString(R.string.error_field_required));
+            focusView = firstName;
+            cancel = true;
+        }
+        else if(TextUtils.isEmpty(lastName.getText().toString()))
+        {
+            lastName.setError(getString(R.string.error_field_required));
+            focusView = lastName;
+            cancel = true;
+        }
+        else if(TextUtils.isEmpty(email.getText().toString()))
+        {
+            email.setError(getString(R.string.error_field_required));
+            focusView = email;
+            cancel = true;
+        }
+        else if(!ChallengeUtil.emailValidator(email.getText().toString()))
+        {
+            email.setError(getString(R.string.error_invalid_email));
+            focusView = email;
+            cancel = true;
+        }
+        else if(!password.getText().toString().equals(confirmPassword.getText().toString()))
+        {
+            email.setError(getString(R.string.confirmacao_email));
+            focusView = email;
+            cancel = true;
+
+        }
+        else if(TextUtils.isEmpty(phone.getText().toString()))
+        {
+            phone.setError(getString(R.string.error_field_required));
+            focusView = phone;
+            cancel = true;
+        }
+        if(cancel)
+        {
+            focusView.requestFocus();
+        }
+        else
+        {
+            User user = new User();
+            user.setUsername(username.getText().toString());
+            user.setFirstName(firstName.getText().toString());
+            user.setLastName(lastName.getText().toString());
+            user.setEmail(email.getText().toString());
+            user.setPassword(password.getText().toString());
+            user.setPhone(phone.getText().toString());
+
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            progressBar.setVisibility(View.VISIBLE);
+            if(ChallengeUtil.isNetworkAvailable(getApplicationContext()))
+            {
+                RestClient.getInstance().registerUser(user, registerCallback);
+            }
+            else
+            {
+                Snackbar.make(root, R.string.sem_conexao, Snackbar.LENGTH_LONG).setAction(R.string.ok, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }
     }
 }
