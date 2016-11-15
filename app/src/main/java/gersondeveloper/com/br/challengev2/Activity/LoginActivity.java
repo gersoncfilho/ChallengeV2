@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
@@ -49,8 +52,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //enable transitions
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
         root = findViewById(R.id.activity_login_new);
 
         //Verifica se usuário já existe, se existir vai direto para a tela principal, caso contrário é direcionado a página de login
@@ -79,10 +86,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.register_button)
-    public void register()
+    public void register(View view)
     {
+        getWindow().setExitTransition(new Explode());
         Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
-        startActivity(intent);
+        startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(this).toBundle());
     }
 
     private void attemptLogin()
