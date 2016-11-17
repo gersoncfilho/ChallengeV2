@@ -24,6 +24,7 @@ import gersondeveloper.com.br.challengev2.Connection.RestClient;
 import gersondeveloper.com.br.challengev2.Model.User;
 import gersondeveloper.com.br.challengev2.R;
 import gersondeveloper.com.br.challengev2.Util.ChallengeUtil;
+import io.realm.Realm;
 import okhttp3.internal.Util;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +36,8 @@ public class CadastroActivity extends AppCompatActivity {
 
     private View focusView;
     private boolean cancel;
-    View root;
+    private Realm realm;
+    private User user;
 
     @BindView(R.id.cadastro_progress_bar)
     ProgressBar progressBar;
@@ -61,12 +63,19 @@ public class CadastroActivity extends AppCompatActivity {
     @BindView(R.id.editTextEmail)
     EditText email;
 
+    @BindView(R.id.activity_cadastro)
+    RelativeLayout root;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Realm.init(this);
         setContentView(R.layout.activity_cadastro);
         ButterKnife.bind(this);
-        root = (RelativeLayout) findViewById(R.id.activity_cadastro);
+
+        realm = Realm.getDefaultInstance();
+
+
     }
 
 
@@ -137,13 +146,21 @@ public class CadastroActivity extends AppCompatActivity {
         }
         else
         {
-            User user = new User();
-            user.setUsername(username.getText().toString());
-            user.setFirstName(firstName.getText().toString());
-            user.setLastName(lastName.getText().toString());
-            user.setEmail(email.getText().toString());
-            user.setPassword(password.getText().toString());
-            user.setPhone(phone.getText().toString());
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    user = realm.createObject(User.class);
+                    user.setUsername(username.getText().toString());
+                    user.setFirstName(firstName.getText().toString());
+                    user.setLastName(lastName.getText().toString());
+                    user.setEmail(email.getText().toString());
+                    user.setPassword(password.getText().toString());
+                    user.setPhone(phone.getText().toString());
+                }
+            });
+
+
+
 
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             progressBar.setVisibility(View.VISIBLE);
@@ -163,4 +180,6 @@ public class CadastroActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

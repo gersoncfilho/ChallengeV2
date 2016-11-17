@@ -30,14 +30,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
 
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
-
-    private Fragment contentFragment;
     Toolbar toolbar;
     Bundle bundle;
     Fragment fragment;
     FragmentActivity activity;
-
-
+    private Fragment contentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int width = metrics.widthPixels;
 
         setContentView(R.layout.activity_main);
 
@@ -100,14 +96,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_minhas_compras:
                 //Starts details fragment
                 fragment = new FragmentCompras();
-                //fragment.setArguments(args);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
                 Fragment currentFrag = fragmentManager.findFragmentById(R.id.content_frame);
                 if(currentFrag != null && currentFrag.getClass().equals(fragment.getClass()))
                 {
-                   transaction.addToBackStack(null);
+                    transaction.addToBackStack(null);
                 }
                 else
                 {
@@ -126,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;*/
 
-             default:
-                 return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
 
         }
     }
@@ -221,8 +216,6 @@ public class MainActivity extends AppCompatActivity {
         {
             getSupportFragmentManager().popBackStack();
         }
-
-
     }
 
     public void switchContent(Fragment fragment, String tag)

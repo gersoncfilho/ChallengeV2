@@ -1,50 +1,33 @@
 package gersondeveloper.com.br.challengev2.Model;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
+import android.os.Parcelable;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 
 /**
  * Created by gerso on 01/10/2016.
  */
 
-public class User implements Serializable {
 
-   @SerializedName("Id")
-   int id;
+public class User extends RealmObject {
 
-   @SerializedName("Username")
-   String username;
 
-   @SerializedName("FirstName")
-   String firstName;
+   private int id;
+   private String username;
+   private String firstName;
+   private String lastName;
+   private String email;
+   private String password;
+   private String phone;
 
-   @SerializedName("LastName")
-   String lastName;
-
-   @SerializedName("Email")
-   String email;
-
-   @SerializedName("Password")
-   String password;
-
-   @SerializedName("Phone")
-   String phone;
-   //String userStatus;
-
-   public User(){}
-
-   public User(int id, String username, String firstName, String lastName, String email, String password, String phone)
-   {
-      this.id=id;
-      this.username=username;
-      this.firstName=firstName;
-      this.lastName=lastName;
-      this.email=email;
-      this.password=password;
-      this.phone=phone;
+   public int getId() {
+      return id;
    }
 
+   public void setId(int id) {
+      this.id = id;
+   }
 
    public String getUsername() {
       return username;
@@ -93,12 +76,4 @@ public class User implements Serializable {
    public void setPhone(String phone) {
       this.phone = phone;
    }
-
-   /*public String getUserStatus() {
-      return userStatus;
-   }
-
-   public void setUserStatus(String userStatus) {
-      this.userStatus = userStatus;
-   }*/
 }
